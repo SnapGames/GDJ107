@@ -2,7 +2,7 @@
 
 [![TravisCI](https://travis-ci.org/SnapGames/GDJ107.svg?branch=develop)](https://travis-ci.org/SnapGames/GDJ107 "open the TravisCI compilation trend") [![Dependency Status](https://www.versioneye.com/user/projects/59dd5fd72de28c2198ef86e9/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/59dd5fd72de28c2198ef86e9 "Open on VersionEye")
 
-## Game Development Java Basics 106
+## Game Development Java Basics 107
 
 This project is part of the [GDJ107](https://classroom.google.com/c/NzI2ODQ3NjU2MFpa/t/NzI2Nzg0MjgxNFpa) course from [GameDev Basics
 Java](https://classroom.google.com/c/NzI2ODQ3NjU2MFpa "Open the official on-line course") 
