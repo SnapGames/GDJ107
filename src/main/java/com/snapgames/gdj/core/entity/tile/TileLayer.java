@@ -91,7 +91,7 @@ public class TileLayer {
 	}
 
 	public void setTile(int tileSetIdx, int tileIdx, int x, int y) {
-		tiles[(x - 1) * width + (y - 1)] = tileSetIdx*10000+tileIdx;
+		tiles[(x - 1) * width + (y - 1)] = tileSetIdx * 10000 + tileIdx;
 	}
 
 	public TileLayer setTileset(String name, BufferedImage image) {
@@ -122,8 +122,10 @@ public class TileLayer {
 
 		for (int iy = vy; iy < vy + vh; iy++) {
 			for (int ix = vx; ix < vx + vw; ix++) {
-				Tile tile = tileSets[0].get(ix * width + iy);
-				g.drawImage(tile.getImage(), (ix - 1) * tileWidth, (iy - 1) * tileHeight, null);
+				if (tiles[ix * width + iy]!=0) {
+					Tile tile = tileSets[0].get(tiles[ix * width + iy]);
+					g.drawImage(tile.getImage(), (ix - 1) * tileWidth, (iy - 1) * tileHeight, null);
+				}
 			}
 		}
 	}
