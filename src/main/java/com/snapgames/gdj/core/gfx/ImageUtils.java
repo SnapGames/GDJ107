@@ -84,4 +84,14 @@ public class ImageUtils {
 	public static void stopRecord() {
 
 	}
+
+	public static void screenshot(BufferedImage image, String fileName) {
+		try {
+			java.io.File out = new java.io.File(path+File.separator+fileName + ".png");
+			javax.imageio.ImageIO.write(image.getSubimage(0, 0, Game.WIDTH, Game.HEIGHT), "PNG", out);
+		} catch (Exception e) {
+			System.err.println("Unable to write screenshot to user.dir: " + path);
+		}
+		
+	}
 }
