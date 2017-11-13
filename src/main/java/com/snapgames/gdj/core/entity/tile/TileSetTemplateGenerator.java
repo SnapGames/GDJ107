@@ -10,12 +10,10 @@
 package com.snapgames.gdj.core.entity.tile;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.GraphicsEnvironment;
 import java.awt.image.BufferedImage;
-
-import javax.imageio.ImageIO;
-import javax.imageio.ImageWriter;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -52,9 +50,11 @@ public class TileSetTemplateGenerator {
 			int tw = Integer.parseInt(line.getOptionValue("tilewidth", "16"));
 			int th = Integer.parseInt(line.getOptionValue("tileheight", "16"));
 			String filename = line.getOptionValue("", "template_" + width + "x" + height + "_" + tw + "x" + th);
-
+			
 			TileSetTemplateGenerator.gerenateImage(filename, width, height, tw, th);
-
+			logger.info("write TileSet template '{}' to {}x{} with tile {}x{}",filename,width,height,tw,th);
+			
+			
 		} catch (ParseException e) {
 			logger.error("unable to parse command line. Try executing command this the -help option.");
 		}
@@ -64,14 +64,21 @@ public class TileSetTemplateGenerator {
 	private static void gerenateImage(String fileName, int width, int height, int tw, int th) {
 		BufferedImage img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		Graphics2D g = GraphicsEnvironment.getLocalGraphicsEnvironment().createGraphics(img);
+
+		Font f = g.getFont().deriveFont(9.0f);
+		g.setFont(f);
+		
 		g.setColor(Color.BLACK);
 		g.clearRect(0, 0, width, height);
-		g.setColor(Color.GRAY);
 		int idx=0;
 		for (int iy = 0; iy < height; iy += th) {
 			for (int ix = 0; ix < width; ix += tw) {
+				g.setColor(Color.GRAY);
 				g.drawRect(ix, iy, tw, th);
-				g.drawString(String.format("%03d", idx++), ix+2, iy+2);
+				g.setColor(Color.WHITE);
+				g.drawLine(ix, iy, ix,iy);
+				g.setColor(Color.DARK_GRAY);
+				g.drawString(String.format("%03d", idx++), ix+2, iy+16);
 			}
 		}
 
