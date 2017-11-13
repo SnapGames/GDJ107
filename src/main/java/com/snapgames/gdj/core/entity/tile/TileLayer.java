@@ -122,12 +122,39 @@ public class TileLayer {
 
 		for (int iy = vy; iy < vy + vh; iy++) {
 			for (int ix = vx; ix < vx + vw; ix++) {
-				if (tiles[ix * width + iy]!=0) {
-					Tile tile = tileSets[0].get(tiles[ix * width + iy]);
+				if (getTileIndex(ix, iy) != 0) {
+					Tile tile = getTile(ix, iy);
 					g.drawImage(tile.getImage(), (ix - 1) * tileWidth, (iy - 1) * tileHeight, null);
 				}
 			}
 		}
+	}
+
+	/**
+	 * Get the tile index at coordinate (tx,ty).
+	 * 
+	 * @param tx
+	 * @param ty
+	 * @return
+	 */
+	public int getTileIndex(int tx, int ty) {
+		return tiles[tx * width + ty];
+	}
+
+	/**
+	 * Get a tile for coordinate (tx,ty). return null if no tile at this coordinate.
+	 * 
+	 * @param tx
+	 *            the x coordinate where to search for.
+	 * @param ty
+	 *            the y coordinate where to search for.
+	 * @return the Tile at tx,ty or null if no Tile.
+	 */
+	public Tile getTile(int tx, int ty) {
+		if (getTileIndex(tx, ty) == 0) {
+			return null;
+		}
+		return tileSets[0].get(getTileIndex(tx, ty));
 	}
 
 }

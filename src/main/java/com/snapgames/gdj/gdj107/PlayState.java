@@ -30,6 +30,7 @@ import com.snapgames.gdj.core.entity.CameraObject;
 import com.snapgames.gdj.core.entity.Direction;
 import com.snapgames.gdj.core.entity.GameObject;
 import com.snapgames.gdj.core.entity.Layer;
+import com.snapgames.gdj.core.entity.tile.TileMap;
 import com.snapgames.gdj.core.gfx.RenderHelper;
 import com.snapgames.gdj.core.io.InputHandler;
 import com.snapgames.gdj.core.state.AbstractGameState;
@@ -130,18 +131,12 @@ public class PlayState extends AbstractGameState implements GameState {
 		// prepare Game objects
 
 		// player (layer 1)
-		player = (Player) new Player("player")
-				.setPosition(Game.WIDTH / 2, Game.HEIGHT / 2)
-				.setSize(16, 16)
-				.setLayer(2)
-				.setPriority(1)
-				.setColor(Color.BLUE);
+		player = (Player) new Player("player").setPosition(Game.WIDTH / 2, Game.HEIGHT / 2).setSize(16, 16).setLayer(2)
+				.setPriority(1).setColor(Color.BLUE);
 
 		addObject(player);
 
-		CameraObject camera = new CameraObject("cam1")
-				.setTarget(player)
-				.setTweenFactor(0.1f);
+		CameraObject camera = new CameraObject("cam1").setTarget(player).setTweenFactor(0.1f);
 		addCamera(camera);
 
 		// NPC
@@ -153,50 +148,29 @@ public class PlayState extends AbstractGameState implements GameState {
 		int marginBottom = (int) (Game.HEIGHT * (1 - camera.getMargin() * 2));
 
 		// HUD Definition (layer 1)
-		scoreTextObject = (TextObject) new TextObject("score")
-				.setText(String.format("%06d", score))
-				.setShadowColor(Color.BLACK)
-				.setShadowBold(2)
-				.setFont(scoreFont)
-				.setPosition(marginLeft, marginTop)
-				.setLayer(1)
-				.setPriority(1)
-				.setColor(Color.WHITE);
+		scoreTextObject = (TextObject) new TextObject("score").setText(String.format("%06d", score))
+				.setShadowColor(Color.BLACK).setShadowBold(2).setFont(scoreFont).setPosition(marginLeft, marginTop)
+				.setLayer(1).setPriority(1).setColor(Color.WHITE);
 		addObject(scoreTextObject);
 
-		energy = (GaugeObject) new GaugeObject("energy")
-				.setMinValue(0)
-				.setMaxValue(100)
-				.setValue(100)
-				.setPosition(marginRight - 50, marginTop)
-				.setSize(42, 6)
-				.setLayer(1)
-				.setPriority(1)
+		energy = (GaugeObject) new GaugeObject("energy").setMinValue(0).setMaxValue(100).setValue(100)
+				.setPosition(marginRight - 50, marginTop).setSize(42, 6).setLayer(1).setPriority(1)
 				.setColor(new Color(1.0f, 0.0f, 0.0f, 0.7f));
 
 		addObject(energy);
 
-		mana = (GaugeObject) new GaugeObject("mana")
-				.setMinValue(0)
-				.setMaxValue(100)
-				.setValue(100)
-				.setPosition(marginRight - 50, marginTop + 12)
-				.setSize(42, 6)
-				.setLayer(1)
-				.setPriority(1)
+		mana = (GaugeObject) new GaugeObject("mana").setMinValue(0).setMaxValue(100).setValue(100)
+				.setPosition(marginRight - 50, marginTop + 12).setSize(42, 6).setLayer(1).setPriority(1)
 				.setColor(new Color(0.0f, 0.0f, 1.0f, 0.9f));
-;
+		;
 		addObject(mana);
 
 		ItemContainerObject[] itemContainers = new ItemContainerObject[2];
 		for (int i = 0; i < itemContainers.length; i++) {
 			itemContainers[i] = (ItemContainerObject) new ItemContainerObject("itContainer_" + i)
 					.setFont(game.getFont().deriveFont(9.0f))
-					.setPosition(marginRight - (6 + (i + 1) * 22),marginBottom - 40)
-					.setSize(16, 16)
-					.setLayer(1)
-					.setPriority(1)
-					.addAttribute("number", new Integer((int) Math.random() * 10));
+					.setPosition(marginRight - (6 + (i + 1) * 22), marginBottom - 40).setSize(16, 16).setLayer(1)
+					.setPriority(1).addAttribute("number", new Integer((int) Math.random() * 10));
 			addObject(itemContainers[i]);
 		}
 
@@ -386,7 +360,13 @@ public class PlayState extends AbstractGameState implements GameState {
 		if (collisionList != null && !collisionList.isEmpty()) {
 			for (Sizeable s : collisionList) {
 				AbstractGameObject ago = (AbstractGameObject) s;
-				if (player.rectangle.intersects(ago.rectangle)) {
+				if (ago instanceof TileMap) {
+					TileMap tm = (TileMap)ago;
+					if(tm.collide(player)) {
+						player.dx=0;
+						player.dy=0;
+					}
+				} else if (player.rectangle.intersects(ago.rectangle)) {
 					int d = 0;
 					if (ago.getClass().equals(Eatable.class)) {
 						d = (Integer) ago.attributes.get("power");
@@ -394,8 +374,7 @@ public class PlayState extends AbstractGameState implements GameState {
 						if (addValueToAttribute(player, "energy", d, 0, 100)) {
 							objects.remove(ago);
 						}
-					}
-					if (ago.getClass().equals(Enemy.class)) {
+					} else if (ago.getClass().equals(Enemy.class)) {
 						addValueToAttribute(player, "energy", -1, 0, 100);
 					}
 				}
@@ -513,8 +492,8 @@ public class PlayState extends AbstractGameState implements GameState {
 				"[" + RenderHelper.showBoolean(isHelp) + "] H: display this help", "   CTRL+S: save a screenshot",
 				"   Q/ESCAPE: Escape the demo" };
 		// TODO Adapt text from i18n messages
-		String[] text2 = {""};
-		
+		String[] text2 = { "" };
+
 		RenderHelper.display(g, x, y, debugFont, text);
 	}
 
@@ -578,20 +557,14 @@ public class PlayState extends AbstractGameState implements GameState {
 			AbstractGameObject entity = null;
 			if (i < halfNb) {
 				entity = new Enemy("enemy_" + i)
-						.setPosition(
-								((float) Math.random() * Game.WIDTH) + ((Game.WIDTH / 2)),
+						.setPosition(((float) Math.random() * Game.WIDTH) + ((Game.WIDTH / 2)),
 								((float) Math.random() * Game.HEIGHT) + ((Game.HEIGHT / 2)))
-						.setVelocity(
-								((float) Math.random() * 0.05f) - 0.02f, 
-								((float) Math.random() * 0.05f) - 0.02f);
+						.setVelocity(((float) Math.random() * 0.05f) - 0.02f, ((float) Math.random() * 0.05f) - 0.02f);
 			} else {
 				entity = new Eatable("eatable_" + i)
-						.setPosition(
-								((float) Math.random() * Game.WIDTH) + ((Game.WIDTH / 2)),
+						.setPosition(((float) Math.random() * Game.WIDTH) + ((Game.WIDTH / 2)),
 								((float) Math.random() * Game.HEIGHT) + ((Game.HEIGHT / 2)))
-						.setVelocity(
-								((float) Math.random() * 0.05f) - 0.02f, 
-								((float) Math.random() * 0.05f) - 0.02f);
+						.setVelocity(((float) Math.random() * 0.05f) - 0.02f, ((float) Math.random() * 0.05f) - 0.02f);
 
 			}
 			entities.add(entity);

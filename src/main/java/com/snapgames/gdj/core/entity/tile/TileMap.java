@@ -17,6 +17,7 @@ import java.util.List;
 
 import com.snapgames.gdj.core.Game;
 import com.snapgames.gdj.core.entity.AbstractGameObject;
+import com.snapgames.gdj.gdj107.entity.Player;
 
 /**
  * A Tilemap is a graphical object drawing some tiles (basic graphics element on
@@ -137,6 +138,31 @@ public class TileMap extends AbstractGameObject {
 		for (TileLayer tl : layers) {
 			tl.draw(game, g);
 		}
+	}
+
+	/**
+	 * detect if an object collide with the tilemap.
+	 * 
+	 * @param object
+	 * @return
+	 */
+	public boolean collide(AbstractGameObject object) {
+		int tx = (int)object.x+(object.width/2);
+		int ty = (int)object.y+(object.height/2);
+		Tile t = getTile(1,tx,ty);
+		return false;
+	}
+
+
+	/**
+	 * 
+	 * @param tileIndex
+	 * @param tx
+	 * @param ty
+	 * @return
+	 */
+	private Tile getTile(int tileIndex, int tx, int ty) {
+		return layers.get(ty).getTile(tx,ty);
 	}
 
 }
