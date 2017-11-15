@@ -274,7 +274,7 @@ public class Game extends JPanel {
 	 */
 	private void release() {
 		gsm.dispose();
-		window.getFrame().dispose();
+		window.dispose();
 	}
 
 	/**

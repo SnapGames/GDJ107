@@ -22,7 +22,7 @@ import com.snapgames.gdj.core.ResourceManager;
  * @author Frédéric Delorme
  *
  */
-public class Window {
+public class Window extends JFrame{
 	/**
 	 * the internal JFrame containing the {@link Game} object.
 	 */
@@ -36,28 +36,23 @@ public class Window {
 	 *            the game to display in.
 	 */
 	public Window(Game game) {
-
+		super(game.getTitle());
 		game.setDimension(Game.WIDTH, Game.HEIGHT, Game.SCALE);
 
-		frame = new JFrame(game.getTitle());
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setContentPane(game);
-		frame.setLayout(new BorderLayout());
-		frame.setSize(game.getDimension());
-		frame.setPreferredSize(game.getDimension());
-		frame.setMaximumSize(game.getDimension());
-		frame.setResizable(false);
-		frame.setIconImage(ResourceManager.getImage("/res/icons/gdj-app.png"));
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setContentPane(game);
+		setLayout(new BorderLayout());
+		setSize(game.getDimension());
+		setPreferredSize(game.getDimension());
+		setMaximumSize(game.getDimension());
+		setResizable(false);
+		setIconImage(ResourceManager.getImage("/res/icons/gdj-app.png"));
 
 		// add the Game InputHandler as a KeyListener
-		frame.addKeyListener(game.getInputHandler());
+		addKeyListener(game.getInputHandler());
 
-		frame.pack();
-		frame.setVisible(true);
+		pack();
+		setVisible(true);
 		game.setWindow(this);
-	}
-
-	public JFrame getFrame() {
-		return frame;
 	}
 }
