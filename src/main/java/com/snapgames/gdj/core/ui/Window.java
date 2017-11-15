@@ -22,11 +22,12 @@ import com.snapgames.gdj.core.ResourceManager;
  * @author Frédéric Delorme
  *
  */
-public class Window extends JFrame{
+public class Window extends JFrame {
+
 	/**
-	 * the internal JFrame containing the {@link Game} object.
+	 * 
 	 */
-	JFrame frame = null;
+	private static final long serialVersionUID = 3295181469904415221L;
 
 	/**
 	 * The default unique constructor to initialize a {@link Window} on the
@@ -37,6 +38,7 @@ public class Window extends JFrame{
 	 */
 	public Window(Game game) {
 		super(game.getTitle());
+		// set game size.
 		game.setDimension(Game.WIDTH, Game.HEIGHT, Game.SCALE);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -46,6 +48,11 @@ public class Window extends JFrame{
 		setPreferredSize(game.getDimension());
 		setMaximumSize(game.getDimension());
 		setResizable(false);
+
+		// center window on default display monitor.
+		setLocationRelativeTo(null);
+
+		// set window icon.
 		setIconImage(ResourceManager.getImage("/res/icons/gdj-app.png"));
 
 		// add the Game InputHandler as a KeyListener
