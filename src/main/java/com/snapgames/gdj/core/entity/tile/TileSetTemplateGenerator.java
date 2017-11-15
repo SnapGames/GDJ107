@@ -50,7 +50,7 @@ public class TileSetTemplateGenerator {
 			int tw = Integer.parseInt(line.getOptionValue("tilewidth", "16"));
 			int th = Integer.parseInt(line.getOptionValue("tileheight", "16"));
 			String filename = line.getOptionValue("", "template_" + width + "x" + height + "_" + tw + "x" + th);
-			
+			logger.info(options.toString());
 			TileSetTemplateGenerator.gerenateImage(filename, width, height, tw, th);
 			logger.info("write TileSet template '{}' to {}x{} with tile {}x{}",filename,width,height,tw,th);
 			
