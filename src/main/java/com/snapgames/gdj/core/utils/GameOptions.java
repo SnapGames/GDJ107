@@ -45,6 +45,12 @@ public class GameOptions {
 	 */
 	public static final String OPTION_SOUND_FLAG = "Options.SoundFlag";
 
+	public static final String OPTION_SCREEN_WIDTH = "Options.screen.width";
+	public static final String OPTION_SCREEN_HEIGHT = "Options.screen.height";
+	public static final String OPTION_SCREEN_SCALE = "Options.screen.scale";
+	public static final String OPTION_SCREEN_DEBUG = "Options.screen.debug";
+	public static final String OPTION_SCREEN_FULLSCREEN_MODE = "Options.screen.debug";
+
 	/**
 	 * file to store configuration of options.
 	 */
@@ -149,8 +155,8 @@ public class GameOptions {
 		return instance;
 	}
 
-	public static void loadOptions() {
-		getInstance();
+	public static GameOptions loadOptions() {
+		return getInstance();
 	}
 
 	public static void saveOptions() {

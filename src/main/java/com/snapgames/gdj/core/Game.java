@@ -33,6 +33,8 @@ import com.snapgames.gdj.core.gfx.ImageUtils;
 import com.snapgames.gdj.core.io.InputHandler;
 import com.snapgames.gdj.core.state.GameStateManager;
 import com.snapgames.gdj.core.ui.Window;
+import com.snapgames.gdj.core.utils.GameOptions;
+import com.snapgames.gdj.core.utils.OptionDoesNotExistsException;
 
 /**
  * the basic Game container is a JPanel child.
@@ -137,6 +139,8 @@ public class Game extends JPanel {
 	private InputHandler inputHandler;
 
 	private GameStateManager gsm;
+
+	private GameOptions options = GameOptions.loadOptions();
 
 	/**
 	 * the default constructor for the {@link Game} panel with a game
@@ -384,6 +388,13 @@ public class Game extends JPanel {
 	}
 
 	/**
+	 * @return the options loaded from file `options.properties` file.
+	 */
+	public GameOptions getOptions() {
+		return options;
+	}
+
+	/**
 	 * request for a screen shot.
 	 */
 	public void captureScreenshot() {
@@ -439,20 +450,43 @@ public class Game extends JPanel {
 		try {
 			CommandLineParser clp = new DefaultParser();
 			CommandLine line = clp.parse(options, argv);
-			int debug = Integer.parseInt(line.getOptionValue("debug", "0"));
-			int width = Integer.parseInt(line.getOptionValue("width", "320"));
-			int height = Integer.parseInt(line.getOptionValue("height", "240"));
-			int scale = Integer.parseInt(line.getOptionValue("scale", "2"));
-			// boolean fullScreen = Boolean.parseBoolean(line.getOptionValue("fullscreen",
-			// "false"));
+			int debug = 0;
+			int width = 0;
+			int height = 0;
+			int scale = 0;
+			boolean fullScreen = false;
+			// retrieve values from command line and set value to GameOptions.
+			if (line.hasOption("debug")) {
+				debug = Integer.parseInt(line.getOptionValue("debug", "0"));
+				GameOptions.set(GameOptions.OPTION_SCREEN_DEBUG, debug);
+			}
+			if (line.hasOption("width")) {
+				width = Integer.parseInt(line.getOptionValue("width", "320"));
+				GameOptions.set(GameOptions.OPTION_SCREEN_WIDTH, width);
+			}
+			if (line.hasOption("height")) {
+				height = Integer.parseInt(line.getOptionValue("height", "240"));
+				GameOptions.set(GameOptions.OPTION_SCREEN_HEIGHT, height);
+			}
+			if (line.hasOption("scale")) {
+				scale = Integer.parseInt(line.getOptionValue("scale", "2"));
+				GameOptions.set(GameOptions.OPTION_SCREEN_SCALE, scale);
+			}
+			if (line.hasOption("fullscreen")) {
+				fullScreen = Boolean.parseBoolean(line.getOptionValue("fullscreen", "false"));
+				GameOptions.set(GameOptions.OPTION_SCREEN_FULLSCREEN_MODE, fullScreen);
+			}
 
-			WIDTH = width;
-			HEIGHT = height;
-			SCALE = scale;
-			this.debug = debug;
+			// Load options from the file.
+			WIDTH = width = GameOptions.getInteger("width").intValue();
+			HEIGHT = height = GameOptions.getInteger("height").intValue();
+			SCALE = scale = GameOptions.getInteger("scale").intValue();
+			this.debug = debug = GameOptions.getInteger("debug").intValue();
 			// TODO implement full screen management.
+			// this.fullscreen =
+			fullScreen = GameOptions.getBoolean("fullscreen").booleanValue();
 
-		} catch (ParseException e) {
+		} catch (ParseException | OptionDoesNotExistsException e) {
 			logger.error("unable to parse command line. Try executing command this the -help option.");
 		}
 

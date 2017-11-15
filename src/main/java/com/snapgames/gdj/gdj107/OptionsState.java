@@ -85,7 +85,6 @@ public class OptionsState extends AbstractGameState {
 		super.initialize(game);
 
 		try {
-			GameOptions.loadOptions();
 			soundFlag = GameOptions.getBoolean(GameOptions.OPTION_SOUND_FLAG);
 			musicFlag = GameOptions.getBoolean(GameOptions.OPTION_MUSIC_FLAG);
 		} catch (OptionDoesNotExistsException e) {
