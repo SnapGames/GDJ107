@@ -3,7 +3,7 @@
  * 
  * Game Development Java
  * 
- * gdj104
+ * gdj107
  * 
  * @year 2017
  */
@@ -17,7 +17,7 @@ import com.snapgames.gdj.core.Game;
 import com.snapgames.gdj.core.ResourceManager;
 
 /**
- * the {@link Window} class to contains and display all the game.
+ * The {@link Window} class to contains and display all the game.
  * 
  * @author Frédéric Delorme
  *
@@ -25,7 +25,7 @@ import com.snapgames.gdj.core.ResourceManager;
 public class Window extends JFrame {
 
 	/**
-	 * 
+	 * Internal serial version UID.
 	 */
 	private static final long serialVersionUID = 3295181469904415221L;
 
