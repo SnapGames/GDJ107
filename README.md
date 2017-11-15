@@ -10,9 +10,7 @@ provided by the [SnapGames](http://snapgames.fr) site.
 
 ### Goal
 
-In this step of course, you will bee discover how to manage collision, manage a HUD and USe a camera to track an active GameObject (like  the Player).
-
-The Google docs corresponding to that course can be find at [GDJ107 - Camera, Collision et HUD](https://docs.google.com/document/d/1ek1M8tnFkciXyRcTje5ClGWW5Ku_AkKlXOOhDiMWIqg "open the corresponding Google Doc.") 
+> TODO
 
 ## Compile
 
@@ -81,30 +79,9 @@ Import this project as an Existing Maven Project into your prefered IDE,
 
 ## Some screen shots ?
 
-### Play State
+### States
 
-The `PlayState` is only a capabilities demonstration purpose state.
-
-![PlayState with minimum debug info](src/main/docs/images/screenshot-002.jpg "PlayState with minimum debug info") ![PlayState without any debug info](src/main/docs/images/screenshot-008.jpg "PlayState without any debug info");
-
-Use the following keys:
-
-- <kbd>D</kbd> / <kbd>F9</kbd> switch between DEBUG modes (see previous table)
-    
-- <kbd>H</kbd> display a help panel to show keyboard shortcuts :)    
-- <kbd>UP</kbd> / <kbd>DOWN</kbd> / <kbd>LEFT</kbd> / <kbd>RIGHT</kbd> to move the blue square which is the `Player` game object,
-- <kbd>SHIFT</kbd> / <kbd>CTRL</kbd> with  cursor key will accelerate move,
-- <kbd>PG-UP</kbd> / <kbd>PG-DOWN</kbd> will increase decrease number of `Enemy` and `Eatable` game objects (to raise-up your energy), 
-- <kbd>SHIFT</kbd> / <kbd>CTRL</kbd> with <kbd>PG-UP</kbd> and <kbd>PG-DOWN</kbd> keys will accelerate increasing.
-
-### Options
-
-The options state is a first version of the options, just to manage Sound and music activation.
-
-![The options state](src/main/docs/images/screenshot-options.jpg "The options state")
-
-> **Info**<br/>
-> More to come soon in ths state to manage inputs, sound  and music volume, etc... !
+> TODO
 
 ## Maven Repo ?
 
