@@ -136,7 +136,7 @@ public class AbstractGameObject implements GameObject {
 	 * @param dy
 	 *            velocity on y direction.
 	 */
-	public AbstractGameObject(String name, int x, int y, int dx, int dy) {
+	protected AbstractGameObject(String name, int x, int y, int dx, int dy) {
 		this();
 		// if name is null, generate a default name.
 		this.name = (name == null || name.equals("") ? "noname_" + indexCounter : name);
@@ -149,6 +149,16 @@ public class AbstractGameObject implements GameObject {
 		this.hSpeed = DEFAULT_HSPEED;
 		this.vSpeed = DEFAULT_VSPEED;
 		this.rectangle = new Rectangle(x, y, width, height);
+	}
+
+	/**
+	 * First call on building a new GameObject with the Chained API.
+	 * 
+	 * @param name
+	 *            Name of this new object.
+	 */
+	public AbstractGameObject(String name) {
+		this(name, 0, 0, 0, 0);
 	}
 
 	/*
@@ -360,7 +370,7 @@ public class AbstractGameObject implements GameObject {
 		this.y = y;
 		return this;
 	}
-	
+
 	/**
 	 * Set size for this Object.
 	 * 
