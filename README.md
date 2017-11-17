@@ -20,7 +20,9 @@ To compile the full project, please execute the following command :
     $> mvn clean install
 ```
 
-## Execute
+## Execute the game
+
+- **On any platform (Linux, MacOS, Windows)**
 
 to execute the compiled jar, please execute the command bellow :
 
@@ -34,7 +36,7 @@ or :
     $> java -jar GDJ107-0.0.1-SNAPSHOT-jar-with-dependencies.jar
 ```
 
-## Windows executable
+- **Specifically to Windows platform**
 
 To build a windows executable file, you must run :
 
@@ -68,7 +70,9 @@ Executing the following line bello:
 
 will open the next window :
 
-![The welcome title state](src/main/docs/images/screenshot-title.jpg "The welcome title state")
+![The welcome title state](src/main/docs/images/screenshot-title.png "The welcome title state")
+![The options state](src/main/docs/images/screenshot-options.png "The Options state")
+![The play state](src/main/docs/images/screenshot-play.png "The Play state")
 
 
 ## Edit
