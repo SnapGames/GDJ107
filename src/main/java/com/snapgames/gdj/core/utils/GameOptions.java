@@ -135,8 +135,9 @@ public class GameOptions {
 	 * Save game options to file <code>options.properties</code>.
 	 */
 	public void save() {
-
-		File fout = new File(this.getClass().getResource("/").getPath() + "options.properties");
+		String path = this.getClass().getResource("./").getPath();
+		logger.info("path for options.properties file: {}",path);
+		File fout = new File( path + "options.properties");
 		FileOutputStream fos;
 		try {
 			fos = new FileOutputStream(fout);

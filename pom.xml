@@ -6,7 +6,7 @@
 	<version>0.0.7-SNAPSHOT</version>
 	<name>GDJ107</name>
 	<description>The basics for the Game development on the java platform. In this sample code, we will add some TextObject, Background image and ButtonObject to create great UI in a new GameState.</description>
-	<url>https://github.com/SnapGames/GDJ106</url>
+	<url>https://github.com/SnapGames/${project.name}</url>
 	<inceptionYear>2017</inceptionYear>
 
 	<!-- Authors and Designers -->
@@ -195,8 +195,10 @@
 					<mainClass>${mainClass}</mainClass>
 					<arguments>
 						<!-- to be soon interpreted by a CLI impl. -->
-						<argument>-d true</argument>
-						<argument>-w 800x300</argument>
+						<argument>-d=1</argument>
+						<argument>-w=320</argument>
+						<argument>-h=240</argument>
+						<argument>-s=2</argument>
 					</arguments>
 				</configuration>
 			</plugin>
@@ -299,7 +301,7 @@
 					<includes>
 						<include>**/*</include>
 					</includes>
-					<repositoryName>GDJ106</repositoryName>      <!-- github repo name -->
+					<repositoryName>${project.name}</repositoryName>      <!-- github repo name -->
 					<repositoryOwner>snapgames</repositoryOwner>    <!-- github username -->
 				</configuration>
 				<executions>
