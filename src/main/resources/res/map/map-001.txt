@@ -1,0 +1,28 @@
+HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
+HHHHHH HHHH         HHHHHHHHHHHHHHHHHHHH
+HHHH    HH    e       HHHHHHHHHHHHHHHHHH
+HH                                HHHHHH
+H   o   E          o  o         o     HH
+HHHHHHHHHHH#HH   HHHHHHHHH   HHHHHHHHHHH
+H          #                          HH
+H  E       #              o  o  o  o  HH
+HHHHHHHHHHHHHHHHHHHH    HHHHHHH#HHHHHHHH
+H                              #   HHHHH
+H                              #      HH
+H E              E             #  E  HHH
+HHHHHHH#HH  HHHHH#HHH     HHHHHHHHHHHHHH
+H      #         #                  oooH
+H      #         #                HHHHHH
+H      #         #                   HHH
+HHHHHHHHHHHHHHHHHHHHHHHHHHHH        ooHH
+HH                             HHHHHHHHH
+H   P    o           o             oHHHH
+HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
+HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
+---
+H:
+P:
+#:
+E:
+e:
+o:

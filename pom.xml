@@ -6,7 +6,7 @@
 	<version>0.0.7-SNAPSHOT</version>
 	<name>GDJ107</name>
 	<description>The basics for the Game development on the java platform.</description>
-	<url>https://github.com/SnapGames/${project.name}</url>
+	<url>https://github.com/SnapGames/GDJ107</url>
 	<inceptionYear>2017</inceptionYear>
 
 	<!-- Authors and Designers -->
@@ -30,16 +30,16 @@
 	</organization>
 	<scm>
 		<url>http://snapgames.github.io</url>
-		<connection>scm:git:https://github.com/SnapGames/${project.name}.git</connection>
-		<developerConnection>scm:git:https://github.com/SnapGames/${project.name}.git</developerConnection>
+		<connection>scm:git:https://github.com/SnapGames/GDJ107.git</connection>
+		<developerConnection>scm:git:https://github.com/SnapGames/GDJ107.git</developerConnection>
 		<tag>${project.version}</tag>
 	</scm>
 	<issueManagement>
 		<system>Github issues</system>
-		<url>https://github.com/SnapGames/${project.name}/issues</url>
+		<url>https://github.com/SnapGames/GDJ107/issues</url>
 	</issueManagement>
 	<ciManagement>
-		<url>https://travis-ci.org/SnapGames/${project.name}</url>
+		<url>https://travis-ci.org/SnapGames/GDJ107</url>
 		<system>Travis-CI</system>
 	</ciManagement>
 
@@ -327,6 +327,5 @@
 			<url>file://${project.build.directory}/mvn-repo</url>
 		</repository>
 	</distributionManagement>
-
 
 </project>

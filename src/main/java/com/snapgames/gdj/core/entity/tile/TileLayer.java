@@ -11,6 +11,7 @@ package com.snapgames.gdj.core.entity.tile;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.InputStream;
 
 import com.snapgames.gdj.core.Game;
 
@@ -55,6 +56,13 @@ public class TileLayer {
 
 	private int tileWidth = 16, tileHeight = 16;
 
+	
+	public TileLayer(int priority) {
+		this.priority = 0;
+		this.root = null;
+	}
+
+	
 	public TileLayer(TileMap tm, int priority) {
 		this.priority = 0;
 		this.root = tm;
@@ -155,6 +163,11 @@ public class TileLayer {
 			return null;
 		}
 		return tileSets[0].get(getTileIndex(tx, ty));
+	}
+
+
+	public TileLayer loadFrom(InputStream fi) {
+		return null;
 	}
 
 }
