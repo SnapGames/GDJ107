@@ -20,9 +20,9 @@ H   P    o           o             oHHHH
 HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
 HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
 ---
-H:
-P:
-#:
-E:
-e:
-o:
+H:block
+P:player
+#:lader
+E:Enemy
+e:eatable
+o:coin
