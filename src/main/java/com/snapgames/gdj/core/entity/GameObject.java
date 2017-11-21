@@ -132,4 +132,11 @@ public interface GameObject extends Sizeable {
 	 *            the Graphics interface to render things.
 	 */
 	void drawSpecialDebugInfo(Game game, Graphics2D g);
+
+	/**
+	 * set the name of the entity at creation time (see {@link EntityFactory}.
+	 * 
+	 * @param name
+	 */
+	void setName(String name);
 }

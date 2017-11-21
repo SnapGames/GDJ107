@@ -487,4 +487,14 @@ public class AbstractGameObject implements GameObject {
 		return this;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.snapgames.gdj.core.entity.GameObject#setName(java.lang.String)
+	 */
+	@Override
+	public void setName(String name) {
+		this.name = name;
+	}
+
 }

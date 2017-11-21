@@ -14,12 +14,9 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-
-import javax.imageio.ImageIO;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,8 +30,8 @@ import com.snapgames.gdj.core.entity.CameraObject;
 import com.snapgames.gdj.core.entity.Direction;
 import com.snapgames.gdj.core.entity.GameObject;
 import com.snapgames.gdj.core.entity.Layer;
-import com.snapgames.gdj.core.entity.tile.TileLayer;
 import com.snapgames.gdj.core.entity.tile.TileMap;
+import com.snapgames.gdj.core.entity.tile.TileMapReader;
 import com.snapgames.gdj.core.gfx.RenderHelper;
 import com.snapgames.gdj.core.io.InputHandler;
 import com.snapgames.gdj.core.state.AbstractGameState;
@@ -143,16 +140,8 @@ public class PlayState extends AbstractGameState implements GameState {
 		CameraObject camera = new CameraObject("cam1").setTarget(player).setTweenFactor(0.1f);
 		addCamera(camera);
 
-		try {
-			TileMap tilemap = new TileMap("map").addLayer(new TileLayer(0).setTileSize(16, 16)
-					.addTileset("basic",
-							ImageIO.read(this.getClass().getResourceAsStream("res/images/tileset/tileset-001.png")))
-					.loadFrom(this.getClass().getResourceAsStream("res/map/map_001.txt")));
-			addObject(tilemap);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		TileMap tilemap = TileMapReader.loadFrom(this.getClass().getResourceAsStream("res/map/map_001.txt"));
+		addObject(tilemap);
 
 		// NPC
 		generateEnemies(10);

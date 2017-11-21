@@ -1,22 +1,33 @@
+@TILEMAP
+name:level 1.1
+description:"the first level for the TileMapReader"
 @TILESET
 A:res/images/tileset/tiles-001.png
 B:res/images/tileset/tiles-002.png
-@TILE
+@END
+@TILEMAPPING
+[:A0 # end block
+M:A1 # block
+]:A2 # start block
+M:A3 # block
+#:A4 # echelle+block
+o:B1 # coins
+S:B2/1 # level output
+@END
+@OBJECTS
 P:player
 E:enemy
 e:eatable
-[:A0
-M:A1
-]:A2
-M:A3
-#:A4
-o:B1
-@MAP
+@END
+@TILELAYER
+p:1
+name:block
+map:{
 MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
 MMMMMM MMMM         MMMMMMMMMMMMMMMMMMMM
 MMMM    MM    e       MMMMMMMMMMMMMMMMMM
 MM                                MMMMMM
-M<  o   E    >     e  o         o     MM
+M<  o   E    >     e  o         o   S MM
 MMMMMMMMMMM#M]   [MMMMMMM]   [MMMMMMMMMM
 M          H                          MM
 M< E       H       >      o  o  o  o  MM
@@ -33,4 +44,10 @@ MM                             [MMMMMMMM
 M   P    o           o             oMMMM
 MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
 MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+}
+@END
+@LAYERIMAGE
+p:2
+name:background
+file:res/images/background-large.jpg
 @END
