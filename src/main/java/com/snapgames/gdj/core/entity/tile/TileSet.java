@@ -52,6 +52,16 @@ public class TileSet {
 	}
 
 	/**
+	 * 
+	 * @param name
+	 * @param image
+	 */
+	public TileSet(String name, BufferedImage image) {
+		this.name = name;
+		this.image = image;
+	}
+
+	/**
 	 * populate the TileSet with Tile with (width,height).
 	 * 
 	 * @param width

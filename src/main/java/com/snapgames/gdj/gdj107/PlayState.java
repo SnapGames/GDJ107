@@ -14,7 +14,6 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -145,11 +144,10 @@ public class PlayState extends AbstractGameState implements GameState {
 		addCamera(camera);
 
 		try {
-			TileMap tilemap = new TileMap("map").setSize(Game.WIDTH * 2, Game.HEIGHT * 2).addLayer(
-					new TileLayer(0)
-						.setTileSize(16, 16)
-						.setTileset("basic", ImageIO.read(this.getClass().getResourceAsStream("res/images/tileset/tileset-001.png")))
-						.loadFrom(this.getClass().getResourceAsStream("res/map/map_001.txt")));
+			TileMap tilemap = new TileMap("map").addLayer(new TileLayer(0).setTileSize(16, 16)
+					.addTileset("basic",
+							ImageIO.read(this.getClass().getResourceAsStream("res/images/tileset/tileset-001.png")))
+					.loadFrom(this.getClass().getResourceAsStream("res/map/map_001.txt")));
 			addObject(tilemap);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

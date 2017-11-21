@@ -1,28 +1,36 @@
-HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
-HHHHHH HHHH         HHHHHHHHHHHHHHHHHHHH
-HHHH    HH    e       HHHHHHHHHHHHHHHHHH
-HH                                HHHHHH
-H   o   E          o  o         o     HH
-HHHHHHHHHHH#HH   HHHHHHHHH   HHHHHHHHHHH
-H          #                          HH
-H  E       #              o  o  o  o  HH
-HHHHHHHHHHHHHHHHHHHH    HHHHHHH#HHHHHHHH
-H                              #   HHHHH
-H                              #      HH
-H E              E             #  E  HHH
-HHHHHHH#HH  HHHHH#HHH     HHHHHHHHHHHHHH
-H      #         #                  oooH
-H      #         #                HHHHHH
-H      #         #                   HHH
-HHHHHHHHHHHHHHHHHHHHHHHHHHHH        ooHH
-HH                             HHHHHHHHH
-H   P    o           o             oHHHH
-HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
-HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
----
-H:block
+@TILESET
+A:res/images/tileset/tiles-001.png
+B:res/images/tileset/tiles-002.png
+@TILE
 P:player
-#:lader
-E:Enemy
+E:enemy
 e:eatable
-o:coin
+[:A0
+M:A1
+]:A2
+M:A3
+#:A4
+o:B1
+@MAP
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMM MMMM         MMMMMMMMMMMMMMMMMMMM
+MMMM    MM    e       MMMMMMMMMMMMMMMMMM
+MM                                MMMMMM
+M<  o   E    >     e  o         o     MM
+MMMMMMMMMMM#M]   [MMMMMMM]   [MMMMMMMMMM
+M          H                          MM
+M< E       H       >      o  o  o  o  MM
+MMMMMMMMMMMMMMMMMMM]    [MMMMMM#MMMMMMMM
+M                              H   MMMMM
+M                              H      MM
+M<E      >  < e  E  >     <    H  E >MMM
+MMMMMMM#M]  [MMMM#MM]     [MMMMMMMMMMMMM
+M      H         H                  o  M
+M      H         H               [MMMMMM
+M      H         H                   MMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMM]        ooMM
+MM                             [MMMMMMMM
+M   P    o           o             oMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+@END

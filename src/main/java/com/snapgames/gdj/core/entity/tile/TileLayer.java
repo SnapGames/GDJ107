@@ -11,7 +11,18 @@ package com.snapgames.gdj.core.entity.tile;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.imageio.ImageIO;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.snapgames.gdj.core.Game;
 
@@ -25,6 +36,7 @@ import com.snapgames.gdj.core.Game;
  *
  */
 public class TileLayer {
+	private static final Logger logger = LoggerFactory.getLogger(TileLayer.class);
 	/**
 	 * internal index for this TileSet.
 	 */
@@ -52,17 +64,21 @@ public class TileLayer {
 	/**
 	 * Set of Tiles used to draw the tilelayer.
 	 */
-	TileSet[] tileSets;
+	Map<String, TileSet> tileSets = new HashMap<>();
 
 	private int tileWidth = 16, tileHeight = 16;
+	private int x;
+	private int y;
+	private Map<String, String> mapTileMap = new HashMap<>();
+	private Map<String, String> mapTileSet = new HashMap<>();
 
-	
 	public TileLayer(int priority) {
 		this.priority = 0;
 		this.root = null;
+		this.x = 0;
+		this.y = 0;
 	}
 
-	
 	public TileLayer(TileMap tm, int priority) {
 		this.priority = 0;
 		this.root = tm;
@@ -102,8 +118,8 @@ public class TileLayer {
 		tiles[(x - 1) * width + (y - 1)] = tileSetIdx * 10000 + tileIdx;
 	}
 
-	public TileLayer setTileset(String name, BufferedImage image) {
-		this.tileSets[idx++] = new TileSet(name).setImage(image).generateWithTileSize(tileWidth, tileHeight);
+	public TileLayer addTileset(String name, BufferedImage image) {
+		this.tileSets.put(name,new TileSet(name).setImage(image).generateWithTileSize(tileWidth, tileHeight));
 		return this;
 	}
 
@@ -162,12 +178,117 @@ public class TileLayer {
 		if (getTileIndex(tx, ty) == 0) {
 			return null;
 		}
-		return tileSets[0].get(getTileIndex(tx, ty));
+		return tileSets.get("A").get(getTileIndex(tx, ty));
 	}
 
+	/**
+	 * load the map for this layer from the is InputStream.
+	 * 
+	 * @param is
+	 * @return
+	 */
+	public TileLayer loadFrom(InputStream is) {
+		Reader isr = null;
+		BufferedReader br = null;
 
-	public TileLayer loadFrom(InputStream fi) {
+		try {
+			boolean exit = false;
+
+			isr = new InputStreamReader(is, "UTF-8");
+			br = new BufferedReader(isr);
+
+			String l = null;
+			StringBuffer sb = new StringBuffer();
+
+			while ((l = br.readLine()) != null && !exit) {
+				switch (l.toUpperCase()) {
+				case "@TILESET":
+					readTileSet(br);
+					break;
+				case "@TILE":
+					initTileList(br);
+					break;
+				case "@MAP":
+					readMap(br);
+					break;
+				case "@END":
+					exit = true;
+				}
+			}
+
+			if (br != null) {
+				br.close();
+			}
+			if (isr != null) {
+				isr.close();
+			}
+		} catch (IOException e) {
+			logger.error("unalbe to read the input stream : {}", e.getMessage());
+		}
+
 		return null;
 	}
 
+	/**
+	 * Read and initialize the {@link TileSet} for this map.
+	 * 
+	 * @throws IOException
+	 */
+	private void readTileSet(BufferedReader br) throws IOException {
+		String l = null;
+		while ((l = br.readLine()) != null) {
+			if (l.startsWith("@")) {
+				break;
+			}
+			String[] keyval = l.split(":");
+			TileSet ts = new TileSet(keyval[0],ImageIO.read(this.getClass().getResourceAsStream(keyval[1])));
+			tileSets.put(keyval[0], ts);
+		}
+	}
+	private void initTileList(BufferedReader br) {
+
+	}
+
+	private void readMap(BufferedReader br) {
+
+	}
+
+
+	/**
+	 * return the width of this {@link TileLayer}.
+	 * 
+	 * @return
+	 */
+	public int getWidth() {
+		return width;
+	}
+
+	/**
+	 * return the height of this {@link TileLayer}.
+	 * 
+	 * @return
+	 */
+	public int getHeight() {
+		return height;
+	}
+
+	/**
+	 * Set the view position for this layer.
+	 * 
+	 * @param x
+	 * @param y
+	 */
+	public void setPosition(int x, int y) {
+		this.x = x * (root.width / this.width);
+		this.y = y * (root.height / this.height);
+	}
+
+	/**
+	 * set root {@link TileMap}.
+	 * 
+	 * @param tm
+	 */
+	public void setTileMap(TileMap tm) {
+		this.root = tm;
+	}
 }

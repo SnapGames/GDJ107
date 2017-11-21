@@ -69,6 +69,11 @@ public class TileMap extends AbstractGameObject {
 	 */
 	public TileMap addLayer(TileLayer layer) {
 		layers.add(layer);
+		if(this.width<layer.getWidth() 
+				|| this.height<layer.getHeight()) {
+			this.width=layer.getWidth();
+			this.height = layer.getHeight();
+		}
 		/*
 		 * Sort all the layers to be ready at draw time.
 		 */
@@ -113,6 +118,9 @@ public class TileMap extends AbstractGameObject {
 	public TileMap setViewPosition(int x, int y) {
 		this.view.x = x;
 		this.view.y = y;
+		for(TileLayer layer:layers) {
+			layer.setPosition(x,y);
+		}
 		return this;
 	}
 
