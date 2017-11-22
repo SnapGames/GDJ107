@@ -14,6 +14,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -31,7 +32,7 @@ import com.snapgames.gdj.core.entity.Direction;
 import com.snapgames.gdj.core.entity.GameObject;
 import com.snapgames.gdj.core.entity.Layer;
 import com.snapgames.gdj.core.entity.tile.TileMap;
-import com.snapgames.gdj.core.entity.tile.TileMapReader;
+import com.snapgames.gdj.core.entity.tile.TileMapFactory;
 import com.snapgames.gdj.core.gfx.RenderHelper;
 import com.snapgames.gdj.core.io.InputHandler;
 import com.snapgames.gdj.core.state.AbstractGameState;
@@ -134,13 +135,15 @@ public class PlayState extends AbstractGameState implements GameState {
 		// player (layer 1)
 		player = (Player) new Player("player").setPosition(Game.WIDTH / 2, Game.HEIGHT / 2).setSize(16, 16).setLayer(2)
 				.setPriority(1).setColor(Color.BLUE);
-
 		addObject(player);
 
+		// Add a camera to track the player
 		CameraObject camera = new CameraObject("cam1").setTarget(player).setTweenFactor(0.1f);
 		addCamera(camera);
 
-		TileMap tilemap = TileMapReader.loadFrom(this.getClass().getResourceAsStream("res/map/map_001.txt"));
+		// Add a tilemap.
+		InputStream in = this.getClass().getResourceAsStream("res/map/map-001.txt");
+		TileMap tilemap = TileMapFactory.loadFrom(in);
 		addObject(tilemap);
 
 		// NPC
@@ -160,13 +163,11 @@ public class PlayState extends AbstractGameState implements GameState {
 		energy = (GaugeObject) new GaugeObject("energy").setMinValue(0).setMaxValue(100).setValue(100)
 				.setPosition(marginRight - 50, marginTop).setSize(42, 6).setLayer(1).setPriority(1)
 				.setColor(new Color(1.0f, 0.0f, 0.0f, 0.7f));
-
 		addObject(energy);
 
 		mana = (GaugeObject) new GaugeObject("mana").setMinValue(0).setMaxValue(100).setValue(100)
 				.setPosition(marginRight - 50, marginTop + 12).setSize(42, 6).setLayer(1).setPriority(1)
 				.setColor(new Color(0.0f, 0.0f, 1.0f, 0.9f));
-		;
 		addObject(mana);
 
 		ItemContainerObject[] itemContainers = new ItemContainerObject[2];

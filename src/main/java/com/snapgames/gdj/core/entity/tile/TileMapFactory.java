@@ -27,14 +27,17 @@ import com.snapgames.gdj.core.entity.EntityFactory;
 import com.snapgames.gdj.core.entity.GameObject;
 
 /**
+ * This factory will load all items from a structured file and build the
+ * {@link TileMap} and its dependencies({@link TileSet}, {@link TileLayer},
+ * {@link Tile} and some {@link GameObject}, and return this to the caller.
  * 
  * @author Frédéric Delorme
  *
  */
-public class TileMapReader {
+public class TileMapFactory {
 
-	private static final Logger logger = LoggerFactory.getLogger(TileMapReader.class);
-	private static TileMapReader instance;
+	private static final Logger logger = LoggerFactory.getLogger(TileMapFactory.class);
+	private static TileMapFactory instance;
 	private TileMap tilemap;
 	private Map<String, TileSet> tileSets = new HashMap<>();
 	private Map<String, Tile> mappingTileToTileSet = new HashMap<>();
@@ -47,6 +50,7 @@ public class TileMapReader {
 	 * @return
 	 */
 	public TileMap loadTileMapFrom(InputStream is) {
+		assert (is == null);
 		tilemap = null;
 		Reader isr = null;
 		BufferedReader br = null;
@@ -81,7 +85,6 @@ public class TileMapReader {
 					exit = true;
 					break;
 				case "@OBJECTS":
-					// TODO implement the reader for Objects.
 					addObjects(br);
 					break;
 				}
@@ -99,17 +102,44 @@ public class TileMapReader {
 		return tilemap;
 	}
 
-	private void addObjects(BufferedReader br) {
-		// TODO implement call to EntityFactory to create Object in map.
-		EntityFactory.createEntity("", "");
-		objects.put("objectname", null);
+	/**
+	 * Add objects from the {@link BufferedReader} <code>br</code>, reading the
+	 * file.
+	 * 
+	 * @param br
+	 * @throws IOException
+	 */
+	private void addObjects(BufferedReader br) throws IOException {
+		String l = null;
+		while ((l = br.readLine()) != null) {
+			if (l.startsWith("@END")) {
+				break;
+			}
+			String[] keyval = l.split(":");
+			GameObject obj = EntityFactory.createEntity(keyval[1], null);
+			objects.put(keyval[0], obj);
+		}
 	}
 
-	private void readLayerImage(BufferedReader br) {
+	/**
+	 * Read an image layer from the {@link BufferedReader} <code>br</code>, reading
+	 * the file.
+	 * 
+	 * @param br
+	 * @throws IOException
+	 */
+	private void readLayerImage(BufferedReader br) throws IOException {
 		// TODO implement layer reading
-
 	}
 
+	/**
+	 * Read the full map from the {@link BufferedReader} <code>br</code>, reading
+	 * the file.
+	 * 
+	 * @param br
+	 * @return
+	 * @throws IOException
+	 */
 	private TileMap readTileMap(BufferedReader br) throws IOException {
 		TileMap map = null;
 		String l = br.readLine();
@@ -137,6 +167,12 @@ public class TileMapReader {
 		}
 	}
 
+	/**
+	 * Initialize all the needed Tiles from mapping a letter to a Tile.
+	 * 
+	 * @param br
+	 * @throws IOException
+	 */
 	private void initTileList(BufferedReader br) throws IOException {
 		String l = null;
 		while ((l = br.readLine()) != null) {
@@ -150,6 +186,13 @@ public class TileMapReader {
 
 	}
 
+	/**
+	 * Read the tiles from the map and build the table of the map.
+	 * 
+	 * @param br
+	 * @throws NumberFormatException
+	 * @throws IOException
+	 */
 	private void readLayerMap(BufferedReader br) throws NumberFormatException, IOException {
 		TileLayer layer = new TileLayer(0);
 		String l = null;
@@ -172,18 +215,24 @@ public class TileMapReader {
 		}
 	}
 
-	private TileMap loadMapFrom(InputStream resourceAsStream) {
-		TileMap tm = loadTileMapFrom(resourceAsStream);
-		return tm;
-	}
-
+	/**
+	 * load a map from the resource Stream.
+	 * 
+	 * @param resourceAsStream
+	 * @return
+	 */
 	public static TileMap loadFrom(InputStream resourceAsStream) {
-		return getInstance().loadMapFrom(resourceAsStream);
+		return getInstance().loadTileMapFrom(resourceAsStream);
 	}
 
-	private static TileMapReader getInstance() {
+	/**
+	 * return the instance.
+	 * 
+	 * @return
+	 */
+	private static TileMapFactory getInstance() {
 		if (instance == null) {
-			instance = new TileMapReader();
+			instance = new TileMapFactory();
 		}
 		return instance;
 	}
