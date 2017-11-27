@@ -9,8 +9,8 @@ B:res/images/tileset/tiles-002.png
 [:A0 # end block
 M:A1 # block
 ]:A2 # start block
-M:A3 # block
-#:A4 # echelle+block
+H:A3 # ladder
+#:A4 # ladder+block
 o:B1 # coins
 S:B2/1 # level output
 @END

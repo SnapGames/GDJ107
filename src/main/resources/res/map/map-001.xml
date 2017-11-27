@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE level SYSTEM "tilemap.dtd">
+<tilemap>
+	<id>1.1</id>
+	<name>the adventure begins</name>
+	<text>This is a first level introducing to the TileMapping for platform
+		gaming.
+	</text>
+	<tilesets>
+		<tileset id="A" file="res/images/tileset/tiles-001.png" />
+		<tileset id="B" file="res/images/tileset/tiles-002.png" />
+	</tilesets>
+	<tilemapping>
+		<tile code="[" ref="A0" />
+		<tile code="M" ref="A1" />
+		<tile code="]" ref="A2" />
+		<tile code="H" ref="A3" />
+		<tile code="#" ref="A0" />
+		<tile code="o" ref="B1" />
+		<tile code="s" ref="B2" />
+	</tilemapping>
+	<objects>
+		<object code="P" type="com.snapgames.gdj.gdj107.entity.Player" name="player" />
+		<object code="E" type="com.snapgames.gdj.gdj107.entity.Enemy" name="enemy" />
+		<object code="e" type="com.snapgames.gdj.gdj107.entity.Eatable" name="eatable" />
+	</objects>
+	<tilelayers>
+	<layer type="map" priority="1" name="block">
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMM MMMM         MMMMMMMMMMMMMMMMMMMM
+MMMM    MM    e       MMMMMMMMMMMMMMMMMM
+MM                                MMMMMM
+M(  o   E    )     e  o         o   S MM
+MMMMMMMMMMM#M]   [MMMMMMM]   [MMMMMMMMMM
+M          H                          MM
+M< E       H       )      o  o  o  o  MM
+MMMMMMMMMMMMMMMMMMM]    [MMMMMM#MMMMMMMM
+M                              H   MMMMM
+M                              H      MM
+M(E      )  ( e  E  )     (    H  E )MMM
+MMMMMMM#M]  [MMMM#MM]     [MMMMMMMMMMMMM
+M      H         H                  o  M
+M      H         H               [MMMMMM
+M      H         H                   MMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMM]        ooMM
+MM                             [MMMMMMMM
+M   P    o           o             oMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+	</layer>
+	<layer type="image" priority="2" name="background">
+	<file path="res/images/background-large.jpg"/>
+	</layer>
+	</tilelayers>
+</tilemap>
+
+
