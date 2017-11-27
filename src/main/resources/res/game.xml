@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE story SYSTEM "states.dtd">
+<!DOCTYPE story SYSTEM "../dtd/states.dtd">
 <game>
 	<default name="title" />
 	<states>
 		<state name="title" class="com.snapgames.gdj.gdj107.TitleState" />
 		<state name="options" class="com.snapgames.gdj.gdj107.OptionsState" />
-		<state name="play" class="com.snapgames.gdj.gdj107.PlayState" />
+		<state name="play" class="com.snapgames.gdj.gdj107.PlayState" attributes="{'tilemap':'res/maps/map-001.xml'}" />
 	</states>
 </game>

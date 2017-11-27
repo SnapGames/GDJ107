@@ -5,8 +5,8 @@
 <!ELEMENT objects (object+)>
 <!ELEMENT tilelayers (layer+)>
 <!ELEMENT tilelayer (file*)>
-<!ATTLIST tileset id (CDATA) #REQUIRED file (CDATA) #REQUIRED >
-<!ATTLIST tile code (CDATA) #REQUIRED ref (CDATA) #REQUIRED >
-<!ATTLIST object code (CDATA) #REQUIRED type (CDATA) #REQUIRED name (CDATA) #REQUIRED>
-<!ATTLIST layer type (CDATA) #REQUIRED priority (CDATA) #REQUIRED name (CDATA) #REQUIRED>
-<!ATTLIST file path (CDATA) #REQUIRED>
+<!ATTLIST tileset id CDATA #REQUIRED file CDATA #REQUIRED >
+<!ATTLIST tile code CDATA #REQUIRED ref CDATA #REQUIRED >
+<!ATTLIST object code CDATA #REQUIRED type CDATA #REQUIRED name CDATA #REQUIRED>
+<!ATTLIST layer type CDATA #REQUIRED priority CDATA #REQUIRED name CDATA #REQUIRED>
+<!ATTLIST file path CDATA #REQUIRED>

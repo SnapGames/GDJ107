@@ -16,6 +16,10 @@ package com.snapgames.gdj.core.utils;
  */
 public class OptionDoesNotExistsException extends Exception {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1804050701564110786L;
 	String optionName;
 
 	/**

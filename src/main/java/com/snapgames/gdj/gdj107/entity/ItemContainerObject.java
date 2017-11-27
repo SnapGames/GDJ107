@@ -12,7 +12,6 @@ package com.snapgames.gdj.gdj107.entity;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 
 import com.snapgames.gdj.core.Game;

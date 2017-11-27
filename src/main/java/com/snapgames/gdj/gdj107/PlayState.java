@@ -142,7 +142,7 @@ public class PlayState extends AbstractGameState implements GameState {
 		addCamera(camera);
 
 		// Add a tilemap.
-		InputStream in = this.getClass().getResourceAsStream("res/map/map-001.txt");
+		InputStream in = this.getClass().getResourceAsStream("res/map/map-001.xml");
 		TileMap tilemap = TileMapFactory.loadFrom(in);
 		addObject(tilemap);
 

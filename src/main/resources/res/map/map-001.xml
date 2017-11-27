@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE level SYSTEM "tilemap.dtd">
+<!DOCTYPE level SYSTEM "../dtd/tilemap.dtd">
 <tilemap>
 	<id>1.1</id>
 	<name>the adventure begins</name>
@@ -33,7 +33,7 @@ MM                                MMMMMM
 M(  o   E    )     e  o         o   S MM
 MMMMMMMMMMM#M]   [MMMMMMM]   [MMMMMMMMMM
 M          H                          MM
-M< E       H       )      o  o  o  o  MM
+M( E       H       )      o  o  o  o  MM
 MMMMMMMMMMMMMMMMMMM]    [MMMMMM#MMMMMMMM
 M                              H   MMMMM
 M                              H      MM

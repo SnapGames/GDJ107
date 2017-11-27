@@ -17,7 +17,6 @@ import java.util.List;
 
 import com.snapgames.gdj.core.Game;
 import com.snapgames.gdj.core.entity.AbstractGameObject;
-import com.snapgames.gdj.gdj107.entity.Player;
 
 /**
  * A Tilemap is a graphical object drawing some tiles (basic graphics element on
