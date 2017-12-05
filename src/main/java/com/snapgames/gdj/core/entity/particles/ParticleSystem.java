@@ -12,11 +12,14 @@ package com.snapgames.gdj.core.entity.particles;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import com.snapgames.gdj.core.Game;
 import com.snapgames.gdj.core.entity.AbstractGameObject;
+import com.snapgames.gdj.core.entity.CameraObject;
+import com.snapgames.gdj.core.entity.particles.behaviors.ParticleBehavior;
 
 /**
  * The particle System is the main class to manage some particles in a
@@ -25,13 +28,12 @@ import com.snapgames.gdj.core.entity.AbstractGameObject;
  * @author Frédéric Delorme
  *
  */
-public abstract class ParticleSystem extends AbstractGameObject {
+public class ParticleSystem extends AbstractGameObject {
+	public List<Particle> systemParticles = new ArrayList<>();
 
-	private static List<Particle> particles = Arrays.asList(new Particle[200]);
+	private ParticleBehavior behavior;
 
-	private List<Particle> systemParticles = new ArrayList<>();
-
-	Class<? extends Particle> particleClass;
+	public CameraObject camera;
 
 	/**
 	 * Default constructor to create a new Particle System.
@@ -40,18 +42,20 @@ public abstract class ParticleSystem extends AbstractGameObject {
 	 */
 	public ParticleSystem(String name) {
 		super(name);
-
+		this.attributes.put("particle.life", 100);
 	}
 
-	public void initialize() throws InstantiationException, IllegalAccessException {
+	public void initialize() {
 		for (int i = 0; i < systemParticles.size(); i++) {
 
-			Particle part = particleClass.newInstance();
+			Particle part = behavior.create(this);
 			part.initialize(this);
-			systemParticles.set(i, part);
+			if (part.getLife() > 0) {
+				systemParticles.set(i, part);
+			}
 		}
 	}
-	
+
 	/**
 	 * resize the ParticleSystem number of particles.
 	 * 
@@ -59,8 +63,9 @@ public abstract class ParticleSystem extends AbstractGameObject {
 	 *            number of particles for this ParticleSystem.
 	 * @return
 	 */
-	ParticleSystem setNbParticles(int size) {
+	public ParticleSystem setNbParticles(int size) {
 		systemParticles = Arrays.asList(new Particle[size]);
+		initialize();
 		return this;
 	}
 
@@ -70,19 +75,19 @@ public abstract class ParticleSystem extends AbstractGameObject {
 	 * @param attributes
 	 * @return
 	 */
-	ParticleSystem setAttributes(Map<String, Object> attributes) {
+	public ParticleSystem setAttributes(Map<String, Object> attributes) {
 		this.attributes = attributes;
 		return this;
 	}
 
 	/**
-	 * Set the particle implementation class to be managed by this particle system.
+	 * Add a behavior to this particle system.
 	 * 
-	 * @param particleClass
+	 * @param b
 	 * @return
 	 */
-	ParticleSystem setParticleClass(Class<? extends Particle> particleClass) {
-		this.particleClass = particleClass;
+	public ParticleSystem addBehavior(ParticleBehavior b) {
+		this.behavior = b;
 		return this;
 	}
 
@@ -95,9 +100,15 @@ public abstract class ParticleSystem extends AbstractGameObject {
 	 */
 	@Override
 	public void update(Game game, long dt) {
-		for (Particle particle : systemParticles) {
-			particle.update(this, dt);
+		Iterator<Particle> i = systemParticles.iterator();
+		while (i.hasNext()) {
+			Particle particle = i.next();
+			behavior.update(this, particle, dt);
+			if (particle.getLife() == 0) {
+				i.remove();
+			}
 		}
+		behavior.create(this);
 	}
 
 	/*
@@ -110,9 +121,25 @@ public abstract class ParticleSystem extends AbstractGameObject {
 	@Override
 	public void draw(Game game, Graphics2D g) {
 		for (Particle particle : systemParticles) {
-			particle.draw(this, g);
+			behavior.render(this, particle, g);
 		}
 
+	}
+
+	/**
+	 * define the camera the RainBehavior generator must be stick to.
+	 * 
+	 * @param camera
+	 * @return
+	 */
+	public ParticleSystem setCamera(CameraObject camera) {
+		this.camera = camera;
+		return this;
+	}
+
+	public ParticleBehavior getBehavior() {
+
+		return behavior;
 	}
 
 }

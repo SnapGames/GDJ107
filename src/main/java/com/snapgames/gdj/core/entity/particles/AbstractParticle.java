@@ -13,17 +13,18 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 /**
+ * This is a default implementation of all the operation for a basic Particle.
  * 
  * @author Frédéric Delorme
  *
  */
 public class AbstractParticle implements Particle {
 
-	float x, y;
-	float sx, sy;
-	float w = 2, h = 2;
-	int life;
-	Color color = Color.WHITE;
+	public float x, y;
+	public float sx, sy;
+	public float w = 2, h = 2;
+	public int life;
+	public Color color = Color.WHITE;
 
 	/**
 	 * Default constructor for a particle. Only an inheriting class can call this

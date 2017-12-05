@@ -211,7 +211,7 @@ public abstract class AbstractGameState implements GameState {
 
 	public void dispose(Game game) {
 		objects.clear();
-		logger.info("Dispose {}",this.getName());
+		logger.info("Dispose {}", this.getName());
 	}
 
 	/*
@@ -275,21 +275,23 @@ public abstract class AbstractGameState implements GameState {
 				: Game.bbox);
 		if (!objects.isEmpty()) {
 			for (GameObject o : objects) {
-				Layer layer = layers[o.getLayer() - 1];
-				if (layer.active) {
-					if (defaultCamera != null && layer.moveWithCamera) {
-						g.translate(-defaultCamera.getX(), -defaultCamera.getY());
-					}
-					if (viewContainsObject(o, view) || defaultCamera == null || !layer.moveWithCamera) {
-						renderedObjectCount++;
-						o.draw(game, g);
-						if (game.isDebug(DebugLevel.DEBUG_FPS_BOX.ordinal()) || o.isDebugInfoDisplayed()) {
-							o.drawSpecialDebugInfo(game, g);
-
+				if (layers.length > 1) {
+					Layer layer = layers[o.getLayer() - 1];
+					if (layer.active) {
+						if (defaultCamera != null && layer.moveWithCamera) {
+							g.translate(-defaultCamera.getX(), -defaultCamera.getY());
 						}
-					}
-					if (defaultCamera != null && layer.moveWithCamera) {
-						g.translate(defaultCamera.getX(), defaultCamera.getY());
+						if (viewContainsObject(o, view) || defaultCamera == null || !layer.moveWithCamera) {
+							renderedObjectCount++;
+							o.draw(game, g);
+							if (game.isDebug(DebugLevel.DEBUG_FPS_BOX.ordinal()) || o.isDebugInfoDisplayed()) {
+								o.drawSpecialDebugInfo(game, g);
+
+							}
+						}
+						if (defaultCamera != null && layer.moveWithCamera) {
+							g.translate(defaultCamera.getX(), defaultCamera.getY());
+						}
 					}
 				}
 			}
