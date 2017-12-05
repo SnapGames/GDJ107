@@ -16,6 +16,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.snapgames.gdj.core.Game;
 import com.snapgames.gdj.core.entity.AbstractGameObject;
 import com.snapgames.gdj.core.entity.CameraObject;
@@ -29,10 +32,24 @@ import com.snapgames.gdj.core.entity.particles.behaviors.ParticleBehavior;
  *
  */
 public class ParticleSystem extends AbstractGameObject {
+	/**
+	 * Internal Logger
+	 */
+	private static final Logger logger = LoggerFactory.getLogger(ParticleSystem.class);
+
+	/**
+	 * Particles linked to this system.
+	 */
 	public List<Particle> systemParticles = new ArrayList<>();
 
+	/**
+	 * Behavior to be applied to all particles.
+	 */
 	private ParticleBehavior behavior;
 
+	/**
+	 * Camera to set Particle Focus.
+	 */
 	public CameraObject camera;
 
 	/**
@@ -43,8 +60,12 @@ public class ParticleSystem extends AbstractGameObject {
 	public ParticleSystem(String name) {
 		super(name);
 		this.attributes.put("particle.life", 100);
+		logger.debug("create particle system with particle's life set to 100");
 	}
 
+	/**
+	 * Initialize all particles.
+	 */
 	public void initialize() {
 		for (int i = 0; i < systemParticles.size(); i++) {
 
@@ -66,6 +87,7 @@ public class ParticleSystem extends AbstractGameObject {
 	public ParticleSystem setNbParticles(int size) {
 		systemParticles = Arrays.asList(new Particle[size]);
 		initialize();
+		logger.debug("set particles number to {}", size);
 		return this;
 	}
 
@@ -77,6 +99,7 @@ public class ParticleSystem extends AbstractGameObject {
 	 */
 	public ParticleSystem setAttributes(Map<String, Object> attributes) {
 		this.attributes = attributes;
+		logger.debug("set attributes to {}", attributes.toString());
 		return this;
 	}
 
@@ -87,6 +110,7 @@ public class ParticleSystem extends AbstractGameObject {
 	 * @return
 	 */
 	public ParticleSystem addBehavior(ParticleBehavior b) {
+		logger.debug("Add beahavior {}", b.getClass().getName());
 		this.behavior = b;
 		return this;
 	}
@@ -134,11 +158,16 @@ public class ParticleSystem extends AbstractGameObject {
 	 */
 	public ParticleSystem setCamera(CameraObject camera) {
 		this.camera = camera;
+		logger.debug("Set camera to {}", camera.name);
 		return this;
 	}
 
+	/**
+	 * return the currently set behavior on this particle System.
+	 * 
+	 * @return
+	 */
 	public ParticleBehavior getBehavior() {
-
 		return behavior;
 	}
 

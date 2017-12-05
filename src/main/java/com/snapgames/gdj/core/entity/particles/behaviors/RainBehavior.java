@@ -24,10 +24,10 @@ import com.snapgames.gdj.core.entity.particles.entity.Rain;
 public class RainBehavior implements ParticleBehavior {
 
 	private float rainChance;
-	public double dropDiameter;
-	public double dropInitialVelocity;
-	public double mWind = 0;
-	public double mGravity = 9.81f;
+	public float dropDiameter;
+	public float dropInitialVelocity;
+	public float mWind = 0;
+	public float mGravity = 9.81f;
 
 	/**
 	 * Initialize this Behavior to produce {@link Rain} with a
@@ -71,24 +71,23 @@ public class RainBehavior implements ParticleBehavior {
 	public Particle update(ParticleSystem ps, Particle p, float dt) {
 		if (p != null) {
 			switch (p.getClass().getName()) {
+			/**
+			 * Compute update for Rain particle.
+			 */
 			case "Rain":
 				Rain r = (Rain) p;
 				if (r.life > 0) {
 					r.update(ps, dt);
-					if (r.y > ps.camera.height) {
-						r.life = 0;
-						ps.systemParticles.add(new Drop(ps, r.x, ps.camera.height+ps.camera.y));
-					}
 				} else {
 					r.life -= 1;
 				}
 				break;
+			/**
+			 * Compute update for Drop particle.
+			 */
 			case "Drop":
 				Drop drop = (Drop) p;
 				drop.update(ps, dt);
-				if (drop.y >= ps.camera.height+ps.camera.y) {
-					drop.life = 0;
-				}
 				break;
 			default:
 				break;
@@ -137,7 +136,7 @@ public class RainBehavior implements ParticleBehavior {
 	 * @param dropInitialVelocity
 	 *            the dropInitialVelocity to set
 	 */
-	public RainBehavior setDropInitialVelocity(double dropInitialVelocity) {
+	public RainBehavior setDropInitialVelocity(float dropInitialVelocity) {
 		this.dropInitialVelocity = dropInitialVelocity;
 		return this;
 	}

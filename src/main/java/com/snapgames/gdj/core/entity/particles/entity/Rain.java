@@ -49,6 +49,13 @@ public class Rain extends AbstractParticle {
 
 		x += rb.mWind;
 		y += rb.mGravity;
+
+		if (y > ps.camera.height) {
+			life = 0;
+			ps.systemParticles.add(new Drop(ps, x, ps.camera.height + ps.camera.y));
+		}
+
+	
 	}
 
 	@Override

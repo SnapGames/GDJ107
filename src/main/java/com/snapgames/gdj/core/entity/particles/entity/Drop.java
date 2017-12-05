@@ -24,8 +24,13 @@ import com.snapgames.gdj.core.entity.particles.behaviors.RainBehavior;
  *
  */
 public class Drop extends AbstractParticle {
+	
 	RainBehavior rb;
-
+	
+	float t=0;
+	float x0=0,y0=0;
+	float v0,angle;
+	
 	/**
 	 * create a Drop at position x.
 	 * 
@@ -34,9 +39,12 @@ public class Drop extends AbstractParticle {
 	public Drop(ParticleSystem ps, float x, float y) {
 		super();
 		rb = (RainBehavior) ps.getBehavior();
-		this.x = x;
-		this.y = y;
+		this.x0 = x;
+		this.y0 = y;
 		this.color = Color.WHITE;
+		v0 = rb.dropInitialVelocity;
+		angle = (float)Math.toRadians(Math.round(Math.random() * 180)); // from 0 - 180 degrees
+
 	}
 
 	@Override
@@ -46,7 +54,14 @@ public class Drop extends AbstractParticle {
 
 	@Override
 	public void update(ParticleSystem ps, float time) {
-		super.update(ps, time);
+		// double g=10;
+		t += time;
+		x = x0 + v0 * t * (float)Math.cos(angle);
+		y = y0 - (v0 * t * (float)Math.sin(angle) - rb.mGravity * t * t / 2);
+		if (y >= ps.camera.height + ps.camera.y) {
+			life = 0;
+		}
+
 	}
 
 	@Override

@@ -20,10 +20,25 @@ import java.awt.Graphics2D;
  */
 public class AbstractParticle implements Particle {
 
+	/**
+	 * Position of this particle
+	 */
 	public float x, y;
+	/**
+	 * Speed of this particle
+	 */
 	public float sx, sy;
+	/**
+	 * Sizing of the particle
+	 */
 	public float w = 2, h = 2;
+	/**
+	 * Life duration (in frames)
+	 */
 	public int life;
+	/**
+	 * start color for this particle.
+	 */
 	public Color color = Color.WHITE;
 
 	/**
