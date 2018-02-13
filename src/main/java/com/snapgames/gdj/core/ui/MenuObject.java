@@ -259,7 +259,7 @@ public class MenuObject extends AbstractGameObject {
 	/**
 	 * switch to previous item of the menu.
 	 */
-	public void previous() {
+	public void previousMenuItem() {
 		activeItem--;
 		if (activeItem < 0) {
 			activeItem = items.size() - 1;
@@ -269,7 +269,7 @@ public class MenuObject extends AbstractGameObject {
 	/**
 	 * switch to next item in the menu.
 	 */
-	public void next() {
+	public void nextMenuItem() {
 		activeItem++;
 		if (activeItem >= items.size()) {
 			activeItem = 0;

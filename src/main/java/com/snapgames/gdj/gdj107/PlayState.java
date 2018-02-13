@@ -35,11 +35,9 @@ import com.snapgames.gdj.core.io.InputHandler;
 import com.snapgames.gdj.core.state.AbstractGameState;
 import com.snapgames.gdj.core.state.GameState;
 import com.snapgames.gdj.core.state.GameStateManager;
-import com.snapgames.gdj.core.ui.TextObject;
 import com.snapgames.gdj.gdj107.entity.Eatable;
 import com.snapgames.gdj.gdj107.entity.Enemy;
-import com.snapgames.gdj.gdj107.entity.GaugeObject;
-import com.snapgames.gdj.gdj107.entity.ItemContainerObject;
+import com.snapgames.gdj.gdj107.entity.HeadUpDisplay;
 import com.snapgames.gdj.gdj107.entity.Player;
 
 /**
@@ -60,16 +58,8 @@ public class PlayState extends AbstractGameState implements GameState {
 	// list of other entities to demonstrate AbstractGameObject usage.
 	private List<AbstractGameObject> entities = new CopyOnWriteArrayList<>();
 
-	// Object moved by player
-	private TextObject scoreTextObject = null;
-
-	int dEnergy = 1;
-	private GaugeObject energy;
-	int dMana = 1;
-	private GaugeObject mana;
-
-	// score
-	private int score = 0;
+	// HeadUpDisplay to show score, energy and son on...
+	private HeadUpDisplay hud;
 
 	/**
 	 * internal Font to draw any text on the screen !
@@ -130,76 +120,19 @@ public class PlayState extends AbstractGameState implements GameState {
 		// prepare Game objects
 
 		// player (layer 1)
-		player = (Player) new Player("player")
-				.setPosition(Game.WIDTH / 2, Game.HEIGHT / 2)
-				.setSize(16, 16)
-				.setLayer(2)
-				.setPriority(1)
-				.setColor(Color.BLUE);
+		player = (Player) new Player("player").setPosition(Game.WIDTH / 2, Game.HEIGHT / 2).setSize(16, 16).setLayer(2)
+				.setPriority(1).setColor(Color.BLUE);
 
 		addObject(player);
 
-		CameraObject camera = new CameraObject("cam1")
-				.setTarget(player)
-				.setTweenFactor(0.1f);
+		CameraObject camera = new CameraObject("cam1").setTarget(player).setTweenFactor(0.1f);
 		addCamera(camera);
 
 		// NPC
 		generateEnemies(10);
 
-		int marginLeft = (int) (Game.WIDTH * camera.getMargin() * 2);
-		int marginTop = (int) (Game.HEIGHT * camera.getMargin() * 2);
-		int marginRight = (int) (Game.WIDTH * (1 - camera.getMargin() * 2));
-		int marginBottom = (int) (Game.HEIGHT * (1 - camera.getMargin() * 2));
-
-		// HUD Definition (layer 1)
-		scoreTextObject = (TextObject) new TextObject("score")
-				.setText(String.format("%06d", score))
-				.setShadowColor(Color.BLACK)
-				.setShadowBold(2)
-				.setFont(scoreFont)
-				.setPosition(marginLeft, marginTop)
-				.setLayer(1)
-				.setPriority(1)
-				.setColor(Color.WHITE);
-		addObject(scoreTextObject);
-
-		energy = (GaugeObject) new GaugeObject("energy")
-				.setMinValue(0)
-				.setMaxValue(100)
-				.setValue(100)
-				.setPosition(marginRight - 50, marginTop)
-				.setSize(42, 6)
-				.setLayer(1)
-				.setPriority(1)
-				.setColor(new Color(1.0f, 0.0f, 0.0f, 0.7f));
-
-		addObject(energy);
-
-		mana = (GaugeObject) new GaugeObject("mana")
-				.setMinValue(0)
-				.setMaxValue(100)
-				.setValue(100)
-				.setPosition(marginRight - 50, marginTop + 12)
-				.setSize(42, 6)
-				.setLayer(1)
-				.setPriority(1)
-				.setColor(new Color(0.0f, 0.0f, 1.0f, 0.9f));
-;
-		addObject(mana);
-
-		ItemContainerObject[] itemContainers = new ItemContainerObject[2];
-		for (int i = 0; i < itemContainers.length; i++) {
-			itemContainers[i] = (ItemContainerObject) new ItemContainerObject("itContainer_" + i)
-					.setFont(game.getFont().deriveFont(9.0f))
-					.setPosition(marginRight - (6 + (i + 1) * 22),marginBottom - 40)
-					.setSize(16, 16)
-					.setLayer(1)
-					.setPriority(1)
-					.addAttribute("number", new Integer((int) Math.random() * 10));
-			addObject(itemContainers[i]);
-		}
-
+		HeadUpDisplay hud = new HeadUpDisplay(game, camera);
+		addObject(hud);
 	}
 
 	/*
@@ -313,9 +246,9 @@ public class PlayState extends AbstractGameState implements GameState {
 	 * update HUD attributes according to player attributes.
 	 */
 	private void updateHUDAttributes() {
-		if (energy != null && mana != null && player.attributes != null && !player.attributes.isEmpty()) {
-			energy.value = (Integer) player.attributes.get("energy");
-			mana.value = (Integer) player.attributes.get("mana");
+		if (hud != null && player.attributes != null && !player.attributes.isEmpty()) {
+			hud.setEnergy((Integer) player.attributes.get("energy"));
+			hud.setMana((Integer) player.attributes.get("mana"));
 		}
 	}
 
@@ -323,9 +256,8 @@ public class PlayState extends AbstractGameState implements GameState {
 	 * Update Score object on HUD
 	 */
 	private void updateScore() {
-		if (scoreTextObject != null) {
-			score = objects.size();
-			scoreTextObject.text = String.format("%06d", score);
+		if (hud != null) {
+			hud.setScore(objects.size());
 		}
 	}
 
@@ -513,8 +445,8 @@ public class PlayState extends AbstractGameState implements GameState {
 				"[" + RenderHelper.showBoolean(isHelp) + "] H: display this help", "   CTRL+S: save a screenshot",
 				"   Q/ESCAPE: Escape the demo" };
 		// TODO Adapt text from i18n messages
-		String[] text2 = {""};
-		
+		String[] text2 = { "" };
+
 		RenderHelper.display(g, x, y, debugFont, text);
 	}
 
@@ -553,7 +485,7 @@ public class PlayState extends AbstractGameState implements GameState {
 			generateEnemies(nbElem);
 			break;
 		case KeyEvent.VK_PAGE_DOWN:
-			if (score - nbElem >= 0) {
+			if (hud.getScore() - nbElem >= 0) {
 				removeAllObjectOfClass(Enemy.class, nbElem);
 				removeAllObjectOfClass(Eatable.class, nbElem);
 			}
@@ -562,7 +494,7 @@ public class PlayState extends AbstractGameState implements GameState {
 		case KeyEvent.VK_DELETE:
 			removeAllObjectOfClass(Enemy.class);
 			removeAllObjectOfClass(Eatable.class);
-			score = 0;
+			hud.setScore(0);
 			break;
 		case KeyEvent.VK_H:
 			isHelp = !isHelp;
@@ -578,20 +510,14 @@ public class PlayState extends AbstractGameState implements GameState {
 			AbstractGameObject entity = null;
 			if (i < halfNb) {
 				entity = new Enemy("enemy_" + i)
-						.setPosition(
-								((float) Math.random() * Game.WIDTH) + ((Game.WIDTH / 2)),
+						.setPosition(((float) Math.random() * Game.WIDTH) + ((Game.WIDTH / 2)),
 								((float) Math.random() * Game.HEIGHT) + ((Game.HEIGHT / 2)))
-						.setVelocity(
-								((float) Math.random() * 0.05f) - 0.02f, 
-								((float) Math.random() * 0.05f) - 0.02f);
+						.setVelocity(((float) Math.random() * 0.05f) - 0.02f, ((float) Math.random() * 0.05f) - 0.02f);
 			} else {
 				entity = new Eatable("eatable_" + i)
-						.setPosition(
-								((float) Math.random() * Game.WIDTH) + ((Game.WIDTH / 2)),
+						.setPosition(((float) Math.random() * Game.WIDTH) + ((Game.WIDTH / 2)),
 								((float) Math.random() * Game.HEIGHT) + ((Game.HEIGHT / 2)))
-						.setVelocity(
-								((float) Math.random() * 0.05f) - 0.02f, 
-								((float) Math.random() * 0.05f) - 0.02f);
+						.setVelocity(((float) Math.random() * 0.05f) - 0.02f, ((float) Math.random() * 0.05f) - 0.02f);
 
 			}
 			entities.add(entity);

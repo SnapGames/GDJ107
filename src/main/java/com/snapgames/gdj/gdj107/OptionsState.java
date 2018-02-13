@@ -153,10 +153,10 @@ public class OptionsState extends AbstractGameState {
 		super.keyReleased(game, e);
 		switch (e.getKeyCode()) {
 		case KeyEvent.VK_UP:
-			menu.previous();
+			menu.previousMenuItem();
 			break;
 		case KeyEvent.VK_DOWN:
-			menu.next();
+			menu.nextMenuItem();
 			break;
 		case KeyEvent.VK_ENTER:
 		case KeyEvent.VK_SPACE:

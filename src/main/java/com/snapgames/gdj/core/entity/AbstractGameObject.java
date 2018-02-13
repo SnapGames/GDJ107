@@ -29,7 +29,7 @@ import com.snapgames.gdj.core.gfx.RenderHelper;
  * @author Frédéric Delorme
  *
  */
-public class AbstractGameObject implements GameObject {
+public class AbstractGameObject extends Node implements GameObject {
 	/**
 	 * internal indexCounter to generate the default object name.
 	 */
@@ -113,7 +113,7 @@ public class AbstractGameObject implements GameObject {
 	 * Default constructor for this AbstractGameObject.
 	 */
 	public AbstractGameObject() {
-		super();
+		super("root");
 		indexCounter++;
 		index = indexCounter;
 		debugFont = ResourceManager.getFont("debugFont");

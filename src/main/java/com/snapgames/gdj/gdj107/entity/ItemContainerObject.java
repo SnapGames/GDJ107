@@ -30,6 +30,8 @@ public class ItemContainerObject extends AbstractGameObject {
 	public BufferedImage image;
 	public Font containerTextfont;
 
+	public int count =1;
+	
 	/**
 	 * Create a new Item container object with <code>name</code>.
 	 * 
@@ -62,10 +64,10 @@ public class ItemContainerObject extends AbstractGameObject {
 			g.drawImage(image, (int) x, (int) y, null);
 		}
 		if (!attributes.isEmpty()) {
-			if (attributes.containsKey("number")) {
-				int number = (int) attributes.get("number");
+			if (attributes.containsKey("count")) {
+				count = (int) attributes.get("count");
 				g.setFont(containerTextfont);
-				RenderHelper.drawShadowString(g, String.format("%2d", number), (int) x + 18, (int) y + 24, Color.WHITE,
+				RenderHelper.drawShadowString(g, String.format("%2d", count), (int) x + 18, (int) y + 24, Color.WHITE,
 						backgroundColor, TextPosition.RIGHT, 2);
 			}
 		}
