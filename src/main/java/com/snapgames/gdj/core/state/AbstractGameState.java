@@ -182,6 +182,14 @@ public abstract class AbstractGameState implements GameState {
 	}
 
 	/**
+	 * Remove an object from the objects list.
+	 * @param o
+	 */
+	public void removeObject(GameObject o) {
+		objects.remove(o);
+	}
+	
+	/**
 	 * add a Camera object.
 	 * 
 	 * @param cameraObject

@@ -315,50 +315,8 @@ public class PlayState extends AbstractGameState implements GameState {
 	private void manageCollision() {
 		List<Sizeable> collisionList = new CopyOnWriteArrayList<>();
 		quadTree.retrieve(collisionList, player);
-		if (collisionList != null && !collisionList.isEmpty()) {
-			for (Sizeable s : collisionList) {
-				AbstractGameObject ago = (AbstractGameObject) s;
-				if (player.boundingBox.intersects(ago.boundingBox)) {
-					int d = 0;
-					if (ago.getClass().equals(Eatable.class)) {
-						d = (Integer) ago.attributes.get("power");
-						// eat only if energy low.
-						if (addValueToAttribute(player, "energy", d, 0, 100)) {
-							objects.remove(ago);
-						}
-					}
-					if (ago.getClass().equals(Enemy.class)) {
-						addValueToAttribute(player, "energy", -1, 0, 100);
-					}
-				}
-			}
-		}
-	}
+		player.onCollide(this, collisionList);
 
-	/**
-	 * add <code>d</code> to attribute <code>name</code> from game object
-	 * <code>ago</code> and verify <code>min</code> and <code>max</code> value. If
-	 * value as been updated, return <code>true</code>, else <code>false</code>.
-	 * 
-	 * @param ago
-	 * @param name
-	 * @param d
-	 * @param min
-	 * @param max
-	 * @return
-	 */
-	private boolean addValueToAttribute(AbstractGameObject ago, String name, int d, int min, int max) {
-		if (ago != null && ago.attributes != null && ago.attributes.containsKey(name)) {
-			int value = (Integer) ago.attributes.get(name);
-			if (value + d < max && value + d > min) {
-				value += d;
-				player.attributes.put(name, value);
-				return true;
-			}
-		} else {
-			logger.error("GameObject {} does not have property named {}", ago.name, name);
-		}
-		return false;
 	}
 
 	private void computeEntityAction(AbstractGameObject o) {

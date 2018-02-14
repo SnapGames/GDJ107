@@ -153,7 +153,6 @@ public class HeadUpDisplay extends AbstractGameObject {
 	 */
 	public void setMana(Integer manaValue) {
 		mana.setValue(manaValue);
-
 	}
 
 	/**
