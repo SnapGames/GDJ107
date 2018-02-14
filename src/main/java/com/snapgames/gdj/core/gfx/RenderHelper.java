@@ -179,33 +179,33 @@ public class RenderHelper {
 			pane_x = (int) ago.offsetInfo.getX();
 			pane_y = (int) ago.offsetInfo.getY();
 		} else {
-			pane_x = (int) (ago.rectangle.x + ago.width + pane_padding);
-			pane_y = (int) (ago.rectangle.y + ago.height + pane_padding);
+			pane_x = (int) (ago.boundingBox.x + ago.width + pane_padding);
+			pane_y = (int) (ago.boundingBox.y + ago.height + pane_padding);
 		}
 		if (o.getScale() != 1.0f) {
 			g.scale(o.getScale(), o.getScale());
 		}
 		if (debugLevel >= DebugLevel.DEBUG_FPS_BOX.ordinal()) {
 			g.setColor(Color.YELLOW);
-			g.drawRect((int) ago.rectangle.x, (int) ago.rectangle.y, ago.rectangle.width, ago.rectangle.height);
-			g.drawString("" + ago.index, (int) ago.rectangle.x, (int) ago.rectangle.y);
+			g.drawRect((int) ago.boundingBox.x, (int) ago.boundingBox.y, ago.boundingBox.width, ago.boundingBox.height);
+			g.drawString("" + ago.index, (int) ago.boundingBox.x, (int) ago.boundingBox.y);
 		}
 		if (debugLevel >= DebugLevel.DEBUG_FPS_BOX_DIRECTION.ordinal()) {
 			g.setColor(Color.GREEN);
 			switch (ago.direction) {
 			case UP:
-				g.drawLine((int) ago.rectangle.x, (int) ago.rectangle.y, (int) ago.rectangle.x + ago.rectangle.width, (int) ago.rectangle.y);
+				g.drawLine((int) ago.boundingBox.x, (int) ago.boundingBox.y, (int) ago.boundingBox.x + ago.boundingBox.width, (int) ago.boundingBox.y);
 				break;
 			case LEFT:
-				g.drawLine((int) ago.rectangle.x, (int) ago.rectangle.y + (int) ago.rectangle.height, (int) ago.rectangle.x, (int) ago.rectangle.y);
+				g.drawLine((int) ago.boundingBox.x, (int) ago.boundingBox.y + (int) ago.boundingBox.height, (int) ago.boundingBox.x, (int) ago.boundingBox.y);
 				break;
 			case RIGHT:
-				g.drawLine((int) ago.rectangle.x + (int) ago.rectangle.width, (int) ago.rectangle.y + (int) ago.rectangle.height, (int) ago.rectangle.x + (int) ago.rectangle.width,
-						(int) ago.rectangle.y);
+				g.drawLine((int) ago.boundingBox.x + (int) ago.boundingBox.width, (int) ago.boundingBox.y + (int) ago.boundingBox.height, (int) ago.boundingBox.x + (int) ago.boundingBox.width,
+						(int) ago.boundingBox.y);
 				break;
 			case DOWN:
-				g.drawLine((int) ago.rectangle.x, (int) ago.rectangle.y + (int) ago.rectangle.height, (int) ago.rectangle.x + ago.rectangle.width,
-						(int) ago.rectangle.y + (int) ago.rectangle.height);
+				g.drawLine((int) ago.boundingBox.x, (int) ago.boundingBox.y + (int) ago.boundingBox.height, (int) ago.boundingBox.x + ago.boundingBox.width,
+						(int) ago.boundingBox.y + (int) ago.boundingBox.height);
 				break;
 			case NONE:
 				break;
@@ -219,7 +219,7 @@ public class RenderHelper {
 			g.drawRect(pane_x + link, pane_y + link, pane_width, pane_height);
 
 			g.setColor(Color.GREEN);
-			g.drawLine((int) ago.rectangle.x + ago.rectangle.width, (int) ago.rectangle.y + ago.rectangle.height, (int) pane_x + link, pane_y + link);
+			g.drawLine((int) ago.boundingBox.x + ago.boundingBox.width, (int) ago.boundingBox.y + ago.boundingBox.height, (int) pane_x + link, pane_y + link);
 			for (int i = 0; i < lines.size(); i++) {
 				g.drawString(lines.get(i), pane_x + link + pane_padding, pane_y + link + (i + 1) * fontHeight);
 			}

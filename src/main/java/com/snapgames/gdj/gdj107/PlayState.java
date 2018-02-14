@@ -318,7 +318,7 @@ public class PlayState extends AbstractGameState implements GameState {
 		if (collisionList != null && !collisionList.isEmpty()) {
 			for (Sizeable s : collisionList) {
 				AbstractGameObject ago = (AbstractGameObject) s;
-				if (player.rectangle.intersects(ago.rectangle)) {
+				if (player.boundingBox.intersects(ago.boundingBox)) {
 					int d = 0;
 					if (ago.getClass().equals(Eatable.class)) {
 						d = (Integer) ago.attributes.get("power");

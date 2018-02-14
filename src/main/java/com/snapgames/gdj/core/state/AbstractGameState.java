@@ -142,7 +142,7 @@ public abstract class AbstractGameState implements GameState {
 	 * 
 	 * @param object
 	 */
-	protected void addObject(AbstractGameObject object) {
+	public void addObject(AbstractGameObject object) {
 		// add object to rendering list
 		objects.add(object);
 		objects.sort(new Comparator<GameObject>() {
@@ -271,12 +271,12 @@ public abstract class AbstractGameState implements GameState {
 	 */
 	public void render(Game game, Graphics2D g) {
 		int renderedObjectCount = 0;
-		Rectangle view = (defaultCamera != null && defaultCamera.rectangle != null ? defaultCamera.rectangle
+		Rectangle view = (defaultCamera != null && defaultCamera.boundingBox != null ? defaultCamera.boundingBox
 				: Game.bbox);
 		if (!objects.isEmpty()) {
 			for (GameObject o : objects) {
 				Layer layer = layers[o.getLayer() - 1];
-				if (layer.active) {
+				if (layer.active && o.isVisible()) {
 					if (defaultCamera != null && layer.moveWithCamera) {
 						g.translate(-defaultCamera.getX(), -defaultCamera.getY());
 					}
@@ -319,7 +319,7 @@ public abstract class AbstractGameState implements GameState {
 	private boolean viewContainsObject(GameObject o, Rectangle view) {
 		AbstractGameObject ago = (AbstractGameObject) o;
 
-		return view.contains(ago.rectangle);
+		return view.contains(ago.boundingBox);
 	}
 
 	/**

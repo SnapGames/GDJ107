@@ -234,12 +234,12 @@ public class MenuObject extends AbstractGameObject {
 			Rectangle rect = RenderHelper.drawShadowString(g, item.getLabel(), (int) x, (int) y + (i * fm.getHeight()),
 					drawColor, shadowColor, (textPosition != null ? textPosition : TextPosition.LEFT), 2);
 			i++;
-			// update rectangle Bounding Box for this object.
-			rectangle.x = (int) (rect.x < rectangle.x ? rect.x : rectangle.x);
-			rectangle.y = (int) (y - fm.getHeight());
-			rectangle.width = (int) (rect.width > width ? rect.width : width);
-			rectangle.height = i * fm.getHeight();
-			rectangle.width = width = (fm.stringWidth(item.getLabel()) > width ? fm.stringWidth(item.getLabel())
+			// update boundingBox Bounding Box for this object.
+			boundingBox.x = (int) (rect.x < boundingBox.x ? rect.x : boundingBox.x);
+			boundingBox.y = (int) (y - fm.getHeight());
+			boundingBox.width = (int) (rect.width > width ? rect.width : width);
+			boundingBox.height = i * fm.getHeight();
+			boundingBox.width = width = (fm.stringWidth(item.getLabel()) > width ? fm.stringWidth(item.getLabel())
 					: width);
 		}
 	}

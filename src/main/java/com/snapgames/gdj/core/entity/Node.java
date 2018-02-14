@@ -60,6 +60,10 @@ public class Node {
 		this.name = name;
 	}
 
+	public void setRoot(Node rootNode) {
+		this.rootNode = rootNode;
+	}
+
 	/**
 	 * Add a <code>node</code> to the current node.
 	 * 

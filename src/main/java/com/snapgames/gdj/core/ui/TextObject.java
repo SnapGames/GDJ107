@@ -81,11 +81,11 @@ public class TextObject extends AbstractGameObject {
 
 		Rectangle rect = RenderHelper.drawShadowString(g, text, (int) x, (int) y + height - 2, frontColor, shadowColor,
 				(textPosition != null ? textPosition : TextPosition.LEFT), shadowBold);
-		rectangle.x = (int) (rect.x < rectangle.x ? rect.x : rectangle.x);
-		rectangle.y = (int) (y);
-		rectangle.width = (int) (rect.width > width ? rect.width : width);
-		rectangle.height = fm.getHeight();
-		rectangle.width = width = (fm.stringWidth(text) > width ? fm.stringWidth(text) : width);
+		boundingBox.x = (int) (rect.x < boundingBox.x ? rect.x : boundingBox.x);
+		boundingBox.y = (int) (y);
+		boundingBox.width = (int) (rect.width > width ? rect.width : width);
+		boundingBox.height = fm.getHeight();
+		boundingBox.width = width = (fm.stringWidth(text) > width ? fm.stringWidth(text) : width);
 	}
 
 	public void addDebugInfo() {

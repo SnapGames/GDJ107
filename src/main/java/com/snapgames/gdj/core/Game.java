@@ -82,7 +82,7 @@ public class Game extends JPanel {
 	public long framesPerSecond = 0;
 
 	/**
-	 * The rectangle containing the Game screen.
+	 * The boundingBox containing the Game screen.
 	 */
 	public final static Rectangle bbox = new Rectangle(0, 0, WIDTH, HEIGHT);
 
