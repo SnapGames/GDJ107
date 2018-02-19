@@ -279,7 +279,8 @@ public abstract class AbstractGameState implements GameState {
 	 */
 	public void render(Game game, Graphics2D g) {
 		int renderedObjectCount = 0;
-		Rectangle view = (defaultCamera != null && defaultCamera.boundingBox != null ? defaultCamera.boundingBox
+		Rectangle view = ((defaultCamera != null && defaultCamera.boundingBox != null) 
+				? defaultCamera.boundingBox
 				: Game.bbox);
 		if (!objects.isEmpty()) {
 			for (GameObject o : objects) {
@@ -293,7 +294,6 @@ public abstract class AbstractGameState implements GameState {
 						o.draw(game, g);
 						if (game.isDebug(DebugLevel.DEBUG_FPS_BOX.ordinal()) || o.isDebugInfoDisplayed()) {
 							o.drawSpecialDebugInfo(game, g);
-
 						}
 					}
 					if (defaultCamera != null && layer.moveWithCamera) {
@@ -311,9 +311,14 @@ public abstract class AbstractGameState implements GameState {
 		if (game.isDebug(1)) {
 			g.setFont(game.getFont());
 			RenderHelper.drawShadowString(g,
-					String.format("FPS:%03d, ROC:%04d, SOC:%04d", game.framesPerSecond,
-							statistics.get("renderedObjCount"), statistics.get("staticObjCount")),
-					4, (int) (Game.HEIGHT * 0.93f), Color.BLUE, Color.BLACK);
+				String.format("FPS:%03d, ROC:%04d, SOC:%04d", 
+					game.framesPerSecond,
+					statistics.get("renderedObjCount"), 
+					statistics.get("staticObjCount")),
+					4, 
+					(int) (Game.HEIGHT * 0.93f), 
+					Color.BLUE, 
+					Color.BLACK);
 		}
 
 	}

@@ -9,8 +9,7 @@
  */
 package com.snapgames.gdj.core.collision;
 
-import java.util.List;
-
+import com.snapgames.gdj.core.entity.AbstractGameObject;
 import com.snapgames.gdj.core.state.AbstractGameState;
 
 /**
@@ -27,9 +26,12 @@ public interface Collidable {
 	String getName();
 
 	/**
-	 * collision list processing method.
+	 * collision processing method called when ago collide the current object.
 	 * 
-	 * @param collisionList
+	 * @param state
+	 *            game state from the collision happened.
+	 * @param ago
+	 *            the colliding object.
 	 */
-	void onCollide(AbstractGameState state, List<Sizeable> collisionList);
+	void onCollide(AbstractGameState state, AbstractGameObject ago);
 }
