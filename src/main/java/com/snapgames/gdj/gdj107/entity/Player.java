@@ -65,27 +65,24 @@ public class Player extends AbstractGameObject implements Collidable {
 	 * 
 	 * @param collisionList
 	 */
-	public void onCollide(AbstractGameState state, List<Sizeable> collisionList) {
-		if (collisionList != null && !collisionList.isEmpty()) {
-			for (Sizeable s : collisionList) {
-				AbstractGameObject ago = (AbstractGameObject) s;
-				if (ago.isVisible() && boundingBox.intersects(ago.boundingBox)) {
-					int d = 0;
-					switch (ago.getClass().getName()) {
-					case "Eatable":
-						d = (Integer) ago.attributes.get("power");
-						// eat only if energy low.
-						if (addValueToAttribute(this, "energy", d, 0, 100)) {
-							state.removeObject(ago);
-						}
-						break;
-					case "Enemy":
-						addValueToAttribute(this, "energy", -1, 0, 100);
-						break;
-					default:
-						break;
-					}
+	public void onCollide(AbstractGameState state, AbstractGameObject ago) {
+		logger.debug("object {} near player");
+		if (ago.isVisible() && boundingBox.intersects(ago.boundingBox) && !ago.getName().equals(name)) {
+			logger.debug("object {} collide player");
+			int d = 0;
+			switch (ago.getClass().getName()) {
+			case "Eatable":
+				d = (Integer) ago.attributes.get("power");
+				// eat only if energy low.
+				if (addValueToAttribute(this, "energy", d, 0, 100)) {
+					state.removeObject(ago);
 				}
+				break;
+			case "Enemy":
+				addValueToAttribute(this, "energy", -1, 0, 100);
+				break;
+			default:
+				break;
 			}
 		}
 	}

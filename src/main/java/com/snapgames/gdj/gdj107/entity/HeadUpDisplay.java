@@ -141,7 +141,7 @@ public class HeadUpDisplay extends AbstractGameObject {
 	 * 
 	 * @param energyValue
 	 */
-	public void setEnergy(Integer energyValue) {
+	public void setEnergy(int energyValue) {
 		energy.setValue(energyValue);
 
 	}
@@ -151,7 +151,7 @@ public class HeadUpDisplay extends AbstractGameObject {
 	 * 
 	 * @param manaValue
 	 */
-	public void setMana(Integer manaValue) {
+	public void setMana(int manaValue) {
 		mana.setValue(manaValue);
 	}
 

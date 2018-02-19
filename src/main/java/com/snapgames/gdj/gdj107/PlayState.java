@@ -131,7 +131,7 @@ public class PlayState extends AbstractGameState implements GameState {
 		// NPC
 		generateEnemies(10);
 
-		HeadUpDisplay hud = new HeadUpDisplay(game, camera);
+		hud = new HeadUpDisplay(game, camera);
 		addObject(hud);
 	}
 
@@ -212,15 +212,15 @@ public class PlayState extends AbstractGameState implements GameState {
 		float wt = winborder;
 		float wb = (float) playZone.getHeight() - player.height - winborder;
 
-		// player limit to playzone
+		// player limit to play zone
 		constrainPlayerTo(wl, wr, wt, wb);
-		// entities moving limit to playzone.
+		// entities moving limit to play zone.
 		constrainObjectTo();
 		// compute score
 		updateScore();
 		// manage all collision
 		manageCollision();
-		// update all HUD attributes according to player object attriubtes
+		// update all HUD attributes according to player object attributes
 		updateHUDAttributes();
 
 		// Update camera
@@ -246,9 +246,13 @@ public class PlayState extends AbstractGameState implements GameState {
 	 * update HUD attributes according to player attributes.
 	 */
 	private void updateHUDAttributes() {
+		int energy =0;
+		int mana= 0;
 		if (hud != null && player.attributes != null && !player.attributes.isEmpty()) {
-			hud.setEnergy((Integer) player.attributes.get("energy"));
-			hud.setMana((Integer) player.attributes.get("mana"));
+			energy = (Integer) player.attributes.get("energy");
+			mana = (Integer) player.attributes.get("mana");
+			hud.setEnergy(energy);
+			hud.setMana(mana);
 		}
 	}
 
@@ -263,6 +267,8 @@ public class PlayState extends AbstractGameState implements GameState {
 
 	/**
 	 * Constrain all object to play zone.
+	 * 
+	 * TODO Change to modify visibility and not constrain object.
 	 */
 	private void constrainObjectTo() {
 		for (AbstractGameObject o : entities) {
@@ -315,8 +321,18 @@ public class PlayState extends AbstractGameState implements GameState {
 	private void manageCollision() {
 		List<Sizeable> collisionList = new CopyOnWriteArrayList<>();
 		quadTree.retrieve(collisionList, player);
-		player.onCollide(this, collisionList);
+		if (!collisionList.isEmpty()) {
+			for (Sizeable s : collisionList) {
+				AbstractGameObject ago = (AbstractGameObject) s;
+				logger.debug("object {} near player");
+				if (ago.isVisible() 
+						&& player.boundingBox.intersects(ago.boundingBox) 
+						&& !ago.getName().equals(player.getName())) {
 
+					player.onCollide(this, ago);
+				}
+			}
+		}
 	}
 
 	private void computeEntityAction(AbstractGameObject o) {
@@ -342,6 +358,7 @@ public class PlayState extends AbstractGameState implements GameState {
 	@Override
 	public void render(Game game, Graphics2D g) {
 		super.render(game, g);
+		
 
 		// display Help if requested
 		if (isHelp) {
@@ -352,7 +369,7 @@ public class PlayState extends AbstractGameState implements GameState {
 		if (game.isPause()) {
 			drawPause(game, g);
 		}
-
+		
 	}
 
 	/**

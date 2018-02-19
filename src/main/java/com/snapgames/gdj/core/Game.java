@@ -440,11 +440,10 @@ public class Game extends JPanel {
 			CommandLineParser clp = new DefaultParser();
 			CommandLine line = clp.parse(options, argv);
 			int debug = Integer.parseInt(line.getOptionValue("debug", "0"));
-			int width = Integer.parseInt(line.getOptionValue("width", "320"));
-			int height = Integer.parseInt(line.getOptionValue("height", "240"));
+			int width = Integer.parseInt(line.getOptionValue("width", "640"));
+			int height = Integer.parseInt(line.getOptionValue("height", "480"));
 			int scale = Integer.parseInt(line.getOptionValue("scale", "2"));
-			// boolean fullScreen = Boolean.parseBoolean(line.getOptionValue("fullscreen",
-			// "false"));
+			boolean fullScreen = Boolean.parseBoolean(line.getOptionValue("fullscreen", "false"));
 
 			WIDTH = width;
 			HEIGHT = height;
