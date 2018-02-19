@@ -145,11 +145,11 @@ public class TitleState extends AbstractGameState {
 
 		case KeyEvent.VK_UP:
 		case KeyEvent.VK_KP_UP:
-			menu.previous();
+			menu.previousMenuItem();
 			break;
 		case KeyEvent.VK_DOWN:
 		case KeyEvent.VK_KP_DOWN:
-			menu.next();
+			menu.nextMenuItem();
 			break;
 		case KeyEvent.VK_ENTER:
 		case KeyEvent.VK_SPACE:

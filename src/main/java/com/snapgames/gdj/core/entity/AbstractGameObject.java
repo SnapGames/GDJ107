@@ -80,7 +80,7 @@ public class AbstractGameObject implements GameObject {
 
 	public float scale = 1.0f;
 
-	public Rectangle rectangle;
+	public Rectangle boundingBox = new Rectangle();
 
 	public Actions action = Actions.IDLE;
 
@@ -90,7 +90,9 @@ public class AbstractGameObject implements GameObject {
 
 	public Point2D offsetInfo;
 
-	public boolean showDebuginfo;
+	public boolean showDebuginfo = false;
+
+	public boolean visible = true;
 
 	/**
 	 * Rendering depth and priority.
@@ -113,7 +115,6 @@ public class AbstractGameObject implements GameObject {
 	 * Default constructor for this AbstractGameObject.
 	 */
 	public AbstractGameObject() {
-		super();
 		indexCounter++;
 		index = indexCounter;
 		debugFont = ResourceManager.getFont("debugFont");
@@ -148,7 +149,7 @@ public class AbstractGameObject implements GameObject {
 		this.height = DEFAULT_HEIGHT;
 		this.hSpeed = DEFAULT_HSPEED;
 		this.vSpeed = DEFAULT_VSPEED;
-		this.rectangle = new Rectangle(x, y, width, height);
+		this.boundingBox = new Rectangle(x, y, width, height);
 	}
 
 	/**
@@ -180,7 +181,7 @@ public class AbstractGameObject implements GameObject {
 		if (Math.abs(dy) < 0.005) {
 			dy = 0.0f;
 		}
-		rectangle.setBounds((int) x, (int) y, width, height);
+		boundingBox.setBounds((int) x, (int) y, width, height);
 
 	}
 
@@ -484,6 +485,28 @@ public class AbstractGameObject implements GameObject {
 	 */
 	public AbstractGameObject setDebugFont(Font debugFont) {
 		this.debugFont = debugFont;
+		return this;
+	}
+
+	/**
+	 * Can be used to free some resources/objects.
+	 */
+	public void dispose() {
+	}
+
+	/**
+	 * @return the visible
+	 */
+	public boolean isVisible() {
+		return visible;
+	}
+
+	/**
+	 * @param visible
+	 *            the visible to set
+	 */
+	public AbstractGameObject setVisible(boolean visible) {
+		this.visible = visible;
 		return this;
 	}
 

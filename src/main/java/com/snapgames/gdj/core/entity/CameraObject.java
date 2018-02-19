@@ -103,10 +103,10 @@ public class CameraObject extends AbstractGameObject {
 			this.y += ((target.getY()) - (Game.HEIGHT / 2) - y) * tween * dt;
 		}
 
-		rectangle.x = (int) x - 16;
-		rectangle.y = (int) y - 16;
-		rectangle.width = (int) width + 32;
-		rectangle.height = (int) height + 32;
+		boundingBox.x = (int) x - 16;
+		boundingBox.y = (int) y - 16;
+		boundingBox.width = (int) width + 32;
+		boundingBox.height = (int) height + 32;
 
 	}
 
@@ -123,7 +123,7 @@ public class CameraObject extends AbstractGameObject {
 	public void draw(Game game, Graphics2D g) {
 		if (game.isDebug(DebugLevel.DEBUG_FPS_BOX.ordinal())) {
 			g.setColor(Color.GREEN);
-			g.drawRect(16, 16, rectangle.width - 64, height - 48);
+			g.drawRect(16, 16, boundingBox.width - 64, height - 48);
 			g.drawString(name, 16, 16);
 		}
 	}

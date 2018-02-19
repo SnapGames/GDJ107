@@ -234,12 +234,12 @@ public class MenuObject extends AbstractGameObject {
 			Rectangle rect = RenderHelper.drawShadowString(g, item.getLabel(), (int) x, (int) y + (i * fm.getHeight()),
 					drawColor, shadowColor, (textPosition != null ? textPosition : TextPosition.LEFT), 2);
 			i++;
-			// update rectangle Bounding Box for this object.
-			rectangle.x = (int) (rect.x < rectangle.x ? rect.x : rectangle.x);
-			rectangle.y = (int) (y - fm.getHeight());
-			rectangle.width = (int) (rect.width > width ? rect.width : width);
-			rectangle.height = i * fm.getHeight();
-			rectangle.width = width = (fm.stringWidth(item.getLabel()) > width ? fm.stringWidth(item.getLabel())
+			// update boundingBox Bounding Box for this object.
+			boundingBox.x = (int) (rect.x < boundingBox.x ? rect.x : boundingBox.x);
+			boundingBox.y = (int) (y - fm.getHeight());
+			boundingBox.width = (int) (rect.width > width ? rect.width : width);
+			boundingBox.height = i * fm.getHeight();
+			boundingBox.width = width = (fm.stringWidth(item.getLabel()) > width ? fm.stringWidth(item.getLabel())
 					: width);
 		}
 	}
@@ -259,7 +259,7 @@ public class MenuObject extends AbstractGameObject {
 	/**
 	 * switch to previous item of the menu.
 	 */
-	public void previous() {
+	public void previousMenuItem() {
 		activeItem--;
 		if (activeItem < 0) {
 			activeItem = items.size() - 1;
@@ -269,7 +269,7 @@ public class MenuObject extends AbstractGameObject {
 	/**
 	 * switch to next item in the menu.
 	 */
-	public void next() {
+	public void nextMenuItem() {
 		activeItem++;
 		if (activeItem >= items.size()) {
 			activeItem = 0;
